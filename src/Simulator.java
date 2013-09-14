@@ -9,14 +9,15 @@ public class Simulator {
 	public static final int STR = 2;
 
 	//the value of some key words
-	public static int pc;
-	public static int x0;
-	public static int opcode;
+	public static int opcode;//opcode
 	public static int operands;//numbers after the opcode
+	public static int ac;
 	public static int x;
 	public static int Address;
-	public static int ac;
-//	public static int ea;
+
+	//some registers
+	//x0 register
+	public static int x0;
 	//general purpose register
 	public static int Reg[] = new int[4];
 	//mdr and mar and ir
@@ -51,18 +52,17 @@ public class Simulator {
 	//run the instruction
 	public static void run(){
 		//fetch the instruction from the memory
-
-		mar = ProgramCounter.getPC();
-		
-		mdr = Memory.getDataFromMemory(mar);
-		ir = mdr;
+		mar = ProgramCounter.getPC();//mar <- pc
+		ProgramCounter.incrementPC();//pc ++
+		mdr = Memory.getDataFromMemory(mar);//mdr <- c(mar)
+		ir = mdr;//ir <- mdr
 		
 		//decode the instruction
-		operands = ir & 0b1111111111;
-		int temp = ir>>>10;
-		opcode = temp & 0b111111;
-		System.out.println(Integer.toString(operands));
-		System.out.println(Integer.toString(opcode));
+		operands = ir & 0b1111111111;// the last ten bits is operands
+		int temp = ir>>>10;// right shift ten bits
+		opcode = temp & 0b111111;// get the six bits opcode
+//		System.out.println(Integer.toString(operands));
+//		System.out.println(Integer.toString(opcode));
 
 		//choose the instruction function
 		switch(opcode){
