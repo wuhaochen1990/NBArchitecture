@@ -1,9 +1,9 @@
 
 public class Simulator {
 	//max address of the memory of this system
-	public static final int MAX_ADDRESS=9999;
-	//
-	public static final int[] memory = new int[MAX_ADDRESS+1];
+//	public static final int MAX_ADDRESS=9999;
+//	//
+//	public static final int[] memory = new int[MAX_ADDRESS+1];
 	//instruction code
 	public static final int LDR = 1;
 	public static final int STR = 2;
@@ -16,7 +16,7 @@ public class Simulator {
 	public static int x;
 	public static int Address;
 	public static int ac;
-	public static int ea;
+//	public static int ea;
 	//general purpose register
 	public static int Reg[] = new int[4];
 	//mdr and mar and ir
@@ -24,33 +24,37 @@ public class Simulator {
 	public static int mar;
 	public static int ir;
 
-	//get the ea! effective address
-	/*public int GetEA(int x){
+	//get the ea! effective address by switch the x value
+	public static int getEA(int x){
+		int ea = 0;
 		switch(x){
 		case 0:{
-			return Address;
+			ea = Address;
+			break;
 		}
 		case 1:{
-			return x0+Address;
+			ea = x0+Address;
+			break;
 		}
 		case 2:{
-			return memory[Address];
+			ea = Memory.getDataFromMemory(Address);
+			break;
 		}
 		case 3:{
-			return memory[x0+Address];
+			ea = Memory.getDataFromMemory(x0 + Address);
+			break;
 		}
 		}
-		
-	}*/
+		return ea;
+	}
+	
 	//run the instruction
 	public static void run(){
 		//fetch the instruction from the memory
-		memory[0] = 0b100011101100;
-		Reg[3] = 4;
-		pc = 0;
-		mar = pc;
-		pc += 1;
-		mdr = memory[mar];
+
+		mar = ProgramCounter.getPC();
+		
+		mdr = Memory.getDataFromMemory(mar);
 		ir = mdr;
 		
 		//decode the instruction
@@ -64,41 +68,14 @@ public class Simulator {
 		switch(opcode){
 		case LDR:{
 			System.out.println("LDR");
-			Address = operands & 0b111111;
+			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
-			ac = operands & 0b11;
+			x = operands & 0b11;//I and IX  
 			operands = operands>>>2;
-			x = operands & 0b11;
-			switch(x){
-			case 0:{
-				ea = Address;
-				mar = ea;
-				mdr = memory[mar];
-				Reg[ac] = mdr;
-				break;
-			}
-			case 1:{
-				ea = x0 + Address;
-				mar = ea;
-				mdr = memory[mar];
-				Reg[ac] = mdr;
-				break;
-			}
-			case 2:{
-				ea = memory[Address];
-				mar = ea;
-				mdr = memory[mar];
-				Reg[ac] = mdr;
-				break;
-			}
-			case 3:{
-				ea = memory[x0 + Address];
-				mar = ea;
-				mdr = memory[mar];
-				Reg[ac] = mdr;
-				break;
-			}
-			}
+			ac = operands & 0b11;//register number
+			mar = getEA(x);
+			mdr = Memory.getDataFromMemory(mar);
+			Reg[ac] = mdr;
 			
 		}
 		case STR:{
@@ -107,25 +84,8 @@ public class Simulator {
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
-			switch(x){
-				case 0:{
-					ea = Address;
-					memory[ea] = Reg[ac];
-				}
-				case 1:{
-					ea = x0 + Address;
-					memory[ea] = Reg[ac];
-					
-				}
-				case 2:{
-					ea = memory[Address];
-					memory[ea] = Reg[ac];
-				}
-				case 3:{
-					ea = memory[x0 + Address];
-					memory[ea] = Reg[ac];
-				}
-			}
+			Memory.setData2Memory(Reg[ac], getEA(x));
+
 			
 		}
 		
