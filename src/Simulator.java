@@ -55,14 +55,14 @@ public class Simulator {
 		mar = ProgramCounter.getPC();//mar <- pc
 		ProgramCounter.incrementPC();//pc ++
 		mdr = Memory.getDataFromMemory(mar);//mdr <- c(mar)
+		System.out.println(mdr);
 		ir = mdr;//ir <- mdr
 		
 		//decode the instruction
 		operands = ir & 0b1111111111;// the last ten bits is operands
 		int temp = ir>>>10;// right shift ten bits
 		opcode = temp & 0b111111;// get the six bits opcode
-//		System.out.println(Integer.toString(operands));
-//		System.out.println(Integer.toString(opcode));
+		
 
 		//choose the instruction function
 		switch(opcode){
@@ -75,8 +75,7 @@ public class Simulator {
 			ac = operands & 0b11;//register number
 			mar = getEA(x);
 			mdr = Memory.getDataFromMemory(mar);
-			Reg[ac] = mdr;
-			
+			GPRegister.setReg(mdr, ac);
 		}
 		case STR:{
 			Address = operands & 0b111111;
@@ -84,8 +83,7 @@ public class Simulator {
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
-			Memory.setData2Memory(Reg[ac], getEA(x));
-
+			Memory.setData2Memory(GPRegister.getReg(ac), getEA(x));
 			
 		}
 		

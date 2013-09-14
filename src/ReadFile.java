@@ -4,32 +4,31 @@ import java.io.FileReader;
 
 //read instruction from a file
 public class ReadFile {
-	public static void main(String arg[]){
-		// Input file path
-		String filePath = "/Users/haochenwu/Documents/Instruction.txt";
-		//string from the certain file
-		String instruction = "";
+	// Input file path
+	public static String filePath = "/Users/haochenwu/Documents/Instruction.txt";
+	//string from the certain file
+	public static String instruction = "";
+	//readfile function
+	public static void readfile(String path){
 		//try read file from that path
-		try{
-			//create a input stream to read a file
-			File file = new File(filePath);
-			FileReader fileread = new FileReader(file);  
-			BufferedReader br = new BufferedReader(fileread);
-			//start read the file
-			while((instruction=br.readLine())!=null){
-				//print the instruction
-				System.out.println(instruction+"\n");
-				//turn the instruction string to binary and write to the memory
-				Memory.setInstr2Memory(Instr2Binary(instruction));
-			}
-		}catch(Exception ex){
-			//for exception situation
-			System.out.println(ex.getMessage());  
-		}
-		//run the instruction of that line
-		//Simulator.run();
-		Memory.showMemory();
+				try{
+					//create a input stream to read a file
+					File file = new File(path);
+					FileReader fileread = new FileReader(file);  
+					BufferedReader br = new BufferedReader(fileread);
+					//start read the file
+					while((instruction=br.readLine())!=null){
+						//print the instruction
+						System.out.println(instruction+"\n");
+						//turn the instruction string to binary and write to the memory
+						Memory.setInstr2Memory(Instr2Binary(instruction));
+					}
+				}catch(Exception ex){
+					//for exception situation
+					System.out.println(ex.getMessage());  
+				}
 	}
+	
 	//turn instruction string to its opcode binary
 	public static int Instr2Opcode(String instruction){
 		if(instruction.equals("LDR")){
@@ -61,5 +60,17 @@ public class ReadFile {
 		//deal with the splited parts with Instr2Opcode and Instr2Operands and return
 		return Instr2Opcode(splited[0]) + Instr2Operands(splited[1]);
 		
+	}
+	//entrance of this system
+	public static void main(String arg[]){
+		//read the input file
+		readfile(filePath);
+		//show memory
+		Memory.setData2Memory(23, 54);
+		//run the instruction of that line
+		Simulator.run();
+		//show memory after run the simulator
+		Memory.showMemory();
+		GPRegister.showRegByIndex(3);
 	}
 }
