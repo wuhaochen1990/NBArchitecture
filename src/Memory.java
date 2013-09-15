@@ -6,16 +6,16 @@ public class Memory {
 	//memory content
 	public static final int[] memory = new int[MAX_ADDRESS+1];
 	//empty index of the memory
-	public static int emptyIndex = 0;
+	public static int emptyIndex = 2;
 	
 	//show memory
 	public static void showMemory(){
 		System.out.println("This is instruction memory!");
 		//instruction memory
-		for(int i = 0; i < MAX_ADDRESS; i++){
+		for(int i = 2; i < MAX_ADDRESS; i++){
 			//show memory until the empty one
 			if(memory[i]!=0){
-				System.out.println(Integer.toBinaryString(memory[i]));
+				System.out.println("Address: "+Integer.toString(i) + "    " + "Content: "+Integer.toBinaryString(memory[i]));
 			}else{
 				System.out.println("\n");
 				break;
@@ -26,11 +26,16 @@ public class Memory {
 		System.out.println("This is data memory!");
 		for (int j = 50; j < MAX_ADDRESS; j++){
 			if(memory[j]!=0){
-				System.out.println("Address: "+Integer.toString(j));
-				System.out.println("Content: "+Integer.toString(memory[j]));
+				System.out.println("Address: "+Integer.toString(j) + "    " +"Content: "+Integer.toString(memory[j]));
+			
 			}
 		}
 		System.out.println("\n");
+	}
+	//show memory by Index
+	public static void showMemoryByIndex(int index){
+		System.out.println("Address: " + Integer.toString(index));
+		System.out.println("Content: " + Integer.toBinaryString(memory[index])+"\n");
 	}
 	
 	//set instruction to memory

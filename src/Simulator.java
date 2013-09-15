@@ -51,11 +51,13 @@ public class Simulator {
 	
 	//run the instruction
 	public static void run(){
+		//run until there is not instruction in the memory where pc point to
+		System.out.println(ProgramCounter.getPC());
+		while(Memory.getDataFromMemory(ProgramCounter.getPC()) != 0){
 		//fetch the instruction from the memory
 		mar = ProgramCounter.getPC();//mar <- pc
 		ProgramCounter.incrementPC();//pc ++
 		mdr = Memory.getDataFromMemory(mar);//mdr <- c(mar)
-		System.out.println(mdr);
 		ir = mdr;//ir <- mdr
 		
 		//decode the instruction
@@ -70,25 +72,27 @@ public class Simulator {
 			System.out.println("LDR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
-			x = operands & 0b11;//I and IX  
+			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
-			ac = operands & 0b11;//register number
+			x = operands & 0b11;//I and IX
 			mar = getEA(x);
 			mdr = Memory.getDataFromMemory(mar);
 			GPRegister.setReg(mdr, ac);
+			break;
 		}
 		case STR:{
+			System.out.println("STR");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
 			Memory.setData2Memory(GPRegister.getReg(ac), getEA(x));
-			
+			break;
 		}
 		
 		}
-		
+		}
 		
 	}
 }

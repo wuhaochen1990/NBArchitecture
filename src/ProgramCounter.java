@@ -1,6 +1,6 @@
 
 public class ProgramCounter {
-	public static int pc = 0;
+	public static int pc = 2;
 	//get the program counter
 	public static int getPC(){
 		return pc;

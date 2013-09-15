@@ -5,7 +5,7 @@ import java.io.FileReader;
 //read instruction from a file
 public class ReadFile {
 	// Input file path
-	public static String filePath = "/Users/haochenwu/Documents/Instruction.txt";
+	public static String filePath = System.getProperty("user.dir") + "/Instruction.txt";
 	//string from the certain file
 	public static String instruction = "";
 	//readfile function
@@ -44,8 +44,8 @@ public class ReadFile {
 		//for three operands instruction
 		if(splited.length == 3){
 			//extract three operands and change them to binary
-			int operands1 = Integer.parseInt(splited[0])<<8;
-			int operands2 = Integer.parseInt(splited[1])<<6;
+			int operands1 = Integer.parseInt(splited[0])<<6;
+			int operands2 = Integer.parseInt(splited[1])<<8;
 			int operands3 = Integer.parseInt(splited[2]);
 			//merge them into a binary
 			int operands = operands1 + operands2  + operands3;
@@ -71,6 +71,6 @@ public class ReadFile {
 		Simulator.run();
 		//show memory after run the simulator
 		Memory.showMemory();
-		GPRegister.showRegByIndex(3);
+		GPRegister.showReg();
 	}
 }
