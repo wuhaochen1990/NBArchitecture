@@ -15,11 +15,6 @@ public class Simulator {
 	public static int x;
 	public static int Address;
 
-	//some registers
-	//x0 register
-	public static int x0;
-	//general purpose register
-	public static int Reg[] = new int[4];
 	//mdr and mar and ir
 	public static int mdr;
 	public static int mar;
@@ -34,7 +29,7 @@ public class Simulator {
 			break;
 		}
 		case 1:{
-			ea = x0+Address;
+			ea = X0Reg.getX0()+Address;
 			break;
 		}
 		case 2:{
@@ -42,7 +37,7 @@ public class Simulator {
 			break;
 		}
 		case 3:{
-			ea = Memory.getDataFromMemory(x0 + Address);
+			ea = Memory.getDataFromMemory(X0Reg.getX0() + Address);
 			break;
 		}
 		}
@@ -52,7 +47,6 @@ public class Simulator {
 	//run the instruction
 	public static void run(){
 		//run until there is not instruction in the memory where pc point to
-		System.out.println(ProgramCounter.getPC());
 		while(Memory.getDataFromMemory(ProgramCounter.getPC()) != 0){
 		//fetch the instruction from the memory
 		mar = ProgramCounter.getPC();//mar <- pc
@@ -69,7 +63,7 @@ public class Simulator {
 		//choose the instruction function
 		switch(opcode){
 		case LDR:{
-			System.out.println("LDR");
+			//System.out.println("LDR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -81,7 +75,7 @@ public class Simulator {
 			break;
 		}
 		case STR:{
-			System.out.println("STR");
+			//System.out.println("STR");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
