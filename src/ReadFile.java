@@ -73,5 +73,6 @@ public class ReadFile {
 		Memory.showMemory();
 		GPRegister.showReg();
 		X0Reg.showX0();
+		ProgramCounter.showPC();
 	}
 }

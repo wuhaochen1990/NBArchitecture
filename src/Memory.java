@@ -32,6 +32,7 @@ public class Memory {
 		}
 		System.out.println("\n");
 	}
+	
 	//show memory by Index
 	public static void showMemoryByIndex(int index){
 		System.out.println("Address: " + Integer.toString(index));
