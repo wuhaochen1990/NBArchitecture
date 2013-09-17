@@ -8,6 +8,12 @@ public class ReadFile {
 	public static String filePath = System.getProperty("user.dir") + "/Instruction.txt";
 	//string from the certain file
 	public static String instruction = "";
+	
+	//set filePath
+	public static void setfilePath(String f){
+		filePath = f;
+	}
+
 	//readfile function
 	public static void readfile(String path){
 		//try read file from that path
@@ -65,10 +71,15 @@ public class ReadFile {
 	public static void main(String arg[]){
 		//read the input file and write the instruction into memory
 		readfile(filePath);
-		//first set data memory for test
+		
+		//first set data memory or register for test
 		Memory.setData2Memory(23, 54);
+		
+		
+		
 		//run the instruction of that file
 		Simulator.run();
+		
 		//show memory after run the simulator
 		Memory.showMemory();
 		GPRegister.showReg();

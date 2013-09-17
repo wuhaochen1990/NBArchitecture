@@ -12,7 +12,7 @@ public class Memory {
 	public static void showMemory(){
 		System.out.println("This is instruction memory!");
 		//instruction memory
-		for(int i = 2; i < MAX_ADDRESS; i++){
+		for(int i = 2; i < 50; i++){
 			//show memory until the empty one
 			if(memory[i]!=0){
 				System.out.println("Address: "+Integer.toString(i) + "    " + "Content: "+Integer.toBinaryString(memory[i]));

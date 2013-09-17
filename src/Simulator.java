@@ -1,9 +1,6 @@
 
 public class Simulator {
-	//max address of the memory of this system
-//	public static final int MAX_ADDRESS=9999;
-//	//
-//	public static final int[] memory = new int[MAX_ADDRESS+1];
+
 	//instruction code
 	public static final int LDR = 1;
 	public static final int STR = 2;
