@@ -76,7 +76,6 @@ public class ReadFile {
 		Memory.setData2Memory(23, 54);
 		
 		
-		
 		//run the instruction of that file
 		Simulator.run();
 		
