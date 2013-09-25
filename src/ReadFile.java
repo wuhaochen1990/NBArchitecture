@@ -68,21 +68,21 @@ public class ReadFile {
 		
 	}
 	//entrance of this system
-	public static void main(String arg[]){
-		//read the input file and write the instruction into memory
-		readfile(filePath);
-		
-		//first set data memory or register for test
-		Memory.setData2Memory(23, 54);
-		
-		
-		//run the instruction of that file
-		Simulator.run();
-		
-		//show memory after run the simulator
-		Memory.showMemory();
-		GPRegister.showReg();
-		X0Reg.showX0();
-		ProgramCounter.showPC();
-	}
+//	public static void main(String arg[]){
+//		//read the input file and write the instruction into memory
+//		readfile(filePath);
+//		
+//		//first set data memory or register for test
+//		Memory.setData2Memory(23, 54);
+//		
+//		
+//		//run the instruction of that file
+//		Simulator.run();
+//		
+//		//show memory after run the simulator
+//		Memory.showMemory();
+//		GPRegister.showReg();
+//		X0Reg.showX0();
+//		ProgramCounter.showPC();
+//	}
 }

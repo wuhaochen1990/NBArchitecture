@@ -10,9 +10,9 @@ public class X0Reg {
 	public static void setX0(int x0) {
 		X0Reg.x0 = x0;
 	}
-	//show the content of X0
-	public static void showX0(){
-		System.out.println("X0: " + Integer.toString(x0));
-	}
+//	//show the content of X0
+//	public static void showX0(){
+//		System.out.println("X0: " + Integer.toString(x0));
+//	}
 	
 }
