@@ -49,6 +49,8 @@ public class ReadFile {
 			return 42 << 10;
 		}else if(instruction.equals("JZ")){
 			return 10 << 10;
+		}else if(instruction.equals("AMR")){
+			return 4 << 10;
 		}
 		return 0;
 	}

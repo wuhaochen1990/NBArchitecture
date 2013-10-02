@@ -8,6 +8,7 @@ public class Simulator {
 	public static final int LDX = 41;
 	public static final int STX = 42;
 	public static final int JZ = 10;
+	public static final int AMR = 4;
 
 	//the value of some key words
 	public static int opcode;//opcode
@@ -130,6 +131,19 @@ public class Simulator {
 				ProgramCounter.decrementPC();
 				ProgramCounter.incrementPC();
 			}
+		}
+		case AMR:{
+			System.out.println("AMR");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			ALU.setDestination(ac);//set destination register
+			ALU.setSource(Memory.getDataFromMemory(getEA(x)));//set source content
+			ALU.setOperation(0);//add operation number is 0
+			ALU.runALU();
+			break;
 		}
 		}
 		}
