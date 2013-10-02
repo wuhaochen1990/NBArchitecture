@@ -41,6 +41,14 @@ public class ReadFile {
 			return 1 << 10;
 		}else if(instruction.equals("STR")){
 			return 2 << 10;
+		}else if(instruction.equals("LDA")){
+			return 3 << 10;
+		}else if(instruction.equals("LDX")){
+			return 41 << 10;
+		}else if(instruction.equals("STX")){
+			return 42 << 10;
+		}else if(instruction.equals("JZ")){
+			return 10 << 10;
 		}
 		return 0;
 	}
@@ -56,9 +64,17 @@ public class ReadFile {
 			//merge them into a binary
 			int operands = operands1 + operands2  + operands3;
 			return operands;
-		}else{
+		}else if(splited.length == 2){
+			//extract three operands and change them to binary
+			int operands1 = Integer.parseInt(splited[0])<<6;
+			int operands2 = Integer.parseInt(splited[1]);
+			//merge them into a binary
+			int operands = operands1 + operands2 ;
+			return operands;
+		}else if(splited.length == 1){
 			return 0;
 		}
+		return 0;
 	}
 	//turn the whole instruction string into binary
 	public static int Instr2Binary(String instruction){

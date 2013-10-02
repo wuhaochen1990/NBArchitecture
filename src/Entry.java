@@ -67,6 +67,11 @@ public class Entry extends JFrame {
 	private JButton show_memory;
 	
 	private JTextField showmemorycontentTextField;
+	private JPanel panel;
+	private JButton show_X0Reg;
+	private JTextField showX0RegTextField;
+	private JButton showPC;
+	private JTextField showPCTextField;
 	
 	
 
@@ -287,6 +292,33 @@ public class Entry extends JFrame {
 		showmemorycontentTextField = new JTextField();
 		panel_showmemoy.add(showmemorycontentTextField);
 		showmemorycontentTextField.setColumns(10);
+		
+		panel = new JPanel();
+		contentPane.add(panel);
+		
+		show_X0Reg = new JButton("show X0");
+		show_X0Reg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showX0RegTextField.setText(Integer.toString(X0Reg.getX0()));
+			}
+		});
+		panel.add(show_X0Reg);
+		
+		showX0RegTextField = new JTextField();
+		panel.add(showX0RegTextField);
+		showX0RegTextField.setColumns(10);
+		
+		showPC = new JButton("show pc");
+		showPC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showPCTextField.setText(Integer.toString(ProgramCounter.getPC()));
+			}
+		});
+		panel.add(showPC);
+		
+		showPCTextField = new JTextField();
+		panel.add(showPCTextField);
+		showPCTextField.setColumns(10);
 		
 		
 		

@@ -4,6 +4,10 @@ public class Simulator {
 	//instruction code
 	public static final int LDR = 1;
 	public static final int STR = 2;
+	public static final int LDA = 3;
+	public static final int LDX = 41;
+	public static final int STX = 42;
+	public static final int JZ = 10;
 
 	//the value of some key words
 	public static int opcode;//opcode
@@ -60,7 +64,6 @@ public class Simulator {
 		//choose the instruction function
 		switch(opcode){
 		case LDR:{
-			//System.out.println("LDR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -72,7 +75,6 @@ public class Simulator {
 			break;
 		}
 		case STR:{
-			//System.out.println("STR");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
@@ -81,7 +83,54 @@ public class Simulator {
 			Memory.setData2Memory(GPRegister.getReg(ac), getEA(x));
 			break;
 		}
-		
+		case LDA:{
+			Address = operands & 0b111111;
+			operands = operands>>>6;
+			ac = operands & 0b11;
+			operands = operands>>>2;
+			x = operands & 0b11;
+			if(x == 2 || x == 3){
+				GPRegister.setReg(Memory.getDataFromMemory(getEA(x)), ac);
+			}else{
+				GPRegister.setReg(getEA(x), ac);
+			}
+			break;
+		}
+		case LDX:{
+			Address = operands & 0b111111;
+			operands = operands>>>6;
+			x = operands&0b11;
+			X0Reg.setX0(getEA(x));
+			break;
+		}
+		case STX:{
+			Address = operands & 0b111111;
+			operands = operands>>>6;
+			x = operands&0b11;
+			Memory.setData2Memory(X0Reg.getX0(), getEA(x));
+			break;
+		}
+		case JZ:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(GPRegister.getReg(ac) == 0){
+				if(x == 2 || x == 3){
+					//because we have do incrementPC above, so we have to decrement
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				}else{
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(getEA(x));
+				}
+			}else{
+				
+				ProgramCounter.decrementPC();
+				ProgramCounter.incrementPC();
+			}
+		}
 		}
 		}
 		
