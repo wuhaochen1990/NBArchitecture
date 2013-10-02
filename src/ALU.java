@@ -38,7 +38,7 @@ public class ALU {
 	public static void runALU(){
 		switch(operation){
 			case(0):{
-				//add data1 and data2
+				//add
 				int data1 = GPRegister.getReg(destination);
 				int data2 = source;
 				int result = data1 + data2;
@@ -51,6 +51,23 @@ public class ALU {
 				int data2 = source;
 				int result = data1 - data2;
 				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(2):{
+				//mul
+				int rx = GPRegister.getReg(destination);
+				int ry = GPRegister.getReg(source);
+				int result = rx * ry;
+				int lowbit = result & 0b1111111111111111;
+				int highbit = result >>> 16;
+				GPRegister.setReg(lowbit, destination+1);
+				GPRegister.setReg(highbit, destination);
+				break;
+			}
+			case(3):{
+				//div
+				
+				break;
 			}
 		}
 	}

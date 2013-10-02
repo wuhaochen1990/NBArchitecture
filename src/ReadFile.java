@@ -51,11 +51,16 @@ public class ReadFile {
 			return 10 << 10;
 		}else if(instruction.equals("AMR")){
 			return 4 << 10;
+		}else if(instruction.equals("AIR")){
+			return 6 << 10;
+		}else if(instruction.equals("MUL")){
+			return 20 << 10;
 		}
 		return 0;
 	}
 	//turn the rest of the instruction string into operands binary
-	public static int Instr2Operands(String instruction){
+	//first kind of instruction format
+	public static int Instr2Operands1(String instruction){
 		String[] splited = instruction.split(",");
 		//for three operands instruction
 		if(splited.length == 3){
@@ -78,11 +83,37 @@ public class ReadFile {
 		}
 		return 0;
 	}
+	//second kind of instruction format for mul and div
+	public static int Instr2Operands2(String instruction){
+		String[] splited = instruction.split(",");
+		if(splited.length == 2){
+			//extract three operands and change them to binary
+			int operands1 = Integer.parseInt(splited[0])<<8;
+			int operands2 = Integer.parseInt(splited[1])<<6;
+			//merge them into a binary
+			int operands = operands1 + operands2;
+			return operands;
+		}else if(splited.length == 1){
+			int operands1 = Integer.parseInt(splited[0])<<8;
+			return operands1;
+		}
+		return 0;
+	}
 	//turn the whole instruction string into binary
 	public static int Instr2Binary(String instruction){
 		String[] splited = instruction.split(" ");
 		//deal with the splited parts with Instr2Opcode and Instr2Operands and return
-		return Instr2Opcode(splited[0]) + Instr2Operands(splited[1]);
+		//select the different kind of instr format
+		int max = 25 << 10;
+		int min = 20 << 10;
+		int firstpart = Instr2Opcode(splited[0]);
+		if(firstpart <= max & firstpart >= min ){
+			//mul and div instruction have the second kind of instr format
+			return Instr2Opcode(splited[0]) + Instr2Operands2(splited[1]);
+		}else{
+			//other instructions have the first kind of instr format
+			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);
+		}
 		
 	}
 	//entrance of this system

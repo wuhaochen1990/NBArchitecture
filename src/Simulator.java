@@ -9,6 +9,8 @@ public class Simulator {
 	public static final int STX = 42;
 	public static final int JZ = 10;
 	public static final int AMR = 4;
+	public static final int AIR = 6;
+	public static final int MUL = 20;
 
 	//the value of some key words
 	public static int opcode;//opcode
@@ -16,6 +18,9 @@ public class Simulator {
 	public static int ac;
 	public static int x;
 	public static int Address;
+	public static int immed;//immediate number
+	public static int rx;//rx and ry is for mul and div instr
+	public static int ry;
 
 	//mdr and mar and ir
 	public static int mdr;
@@ -142,6 +147,37 @@ public class Simulator {
 			ALU.setDestination(ac);//set destination register
 			ALU.setSource(Memory.getDataFromMemory(getEA(x)));//set source content
 			ALU.setOperation(0);//add operation number is 0
+			ALU.runALU();
+			break;
+		}
+		case AIR:{
+			System.out.println("AMR");
+			immed = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			if(immed != 0){
+				if(GPRegister.getReg(ac)==0){
+					GPRegister.setReg(immed, ac);
+				}else{
+					ALU.setDestination(ac);//set destination register
+					ALU.setSource(immed);//set source content
+					ALU.setOperation(0);//add operation number is 0
+					ALU.runALU();
+				}
+			}else{
+				//if immed is 0, do nothing
+			
+			}
+			break;
+		}
+		case MUL:{
+			operands = operands >>> 6;
+			ry = operands & 0b11;
+			operands = operands >>> 2;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setSource(ry);//set source content
+			ALU.setOperation(2);//mul operation number is 0
 			ALU.runALU();
 			break;
 		}
