@@ -49,6 +49,18 @@ public class ReadFile {
 			return 42 << 10;
 		}else if(instruction.equals("JZ")){
 			return 10 << 10;
+		}else if(instruction.equals("JNE")){
+			return 11 << 10;
+		}else if(instruction.equals("JCC")){
+			return 12 << 10;
+		}else if(instruction.equals("JMP")){
+			return 13 << 10;
+		}else if(instruction.equals("JSR")){
+			return 14 << 10;
+		}else if(instruction.equals("RFS")){
+			return 15 << 10;
+		}else if(instruction.equals("SOB")){
+			return 16 << 10;
 		}else if(instruction.equals("AMR")){
 			return 4 << 10;
 		}else if(instruction.equals("AIR")){
@@ -79,7 +91,8 @@ public class ReadFile {
 			int operands = operands1 + operands2 ;
 			return operands;
 		}else if(splited.length == 1){
-			return 0;
+			int operands1 = Integer.parseInt(splited[0]);
+			return operands1;
 		}
 		return 0;
 	}

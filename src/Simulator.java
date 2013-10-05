@@ -8,6 +8,12 @@ public class Simulator {
 	public static final int LDX = 41;
 	public static final int STX = 42;
 	public static final int JZ = 10;
+	public static final int JNE = 11;
+	public static final int JCC = 12;
+	public static final int JMP = 13;
+	public static final int JSR = 14;
+	public static final int RFS = 15;
+	public static final int SOB = 16;
 	public static final int AMR = 4;
 	public static final int AIR = 6;
 	public static final int MUL = 20;
@@ -21,6 +27,7 @@ public class Simulator {
 	public static int immed;//immediate number
 	public static int rx;//rx and ry is for mul and div instr
 	public static int ry;
+	public static int cc;//condition code for jcc
 
 	//mdr and mar and ir
 	public static int mdr;
@@ -136,6 +143,104 @@ public class Simulator {
 				ProgramCounter.decrementPC();
 				ProgramCounter.incrementPC();
 			}
+		}
+		case JNE:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(GPRegister.getReg(ac) != 0){
+				if(x == 2 || x == 3){
+					//because we have do incrementPC above, so we have to decrement
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				}else{
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(getEA(x));
+				}
+			}else{
+				
+				ProgramCounter.decrementPC();
+				ProgramCounter.incrementPC();
+			}
+			break;
+		}
+		case JCC:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			cc = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(cc == 1){
+				if(x == 2 || x == 3){
+					//because we have do incrementPC above, so we have to decrement
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				}else{
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(getEA(x));
+				}
+			}else{
+				
+				ProgramCounter.decrementPC();
+				ProgramCounter.incrementPC();
+			}
+			break;
+		}
+		case JMP:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			x = operands & 0b11;//register number  
+			if(x == 2 || x == 3){
+				//because we have do incrementPC above, so we have to decrement
+				ProgramCounter.decrementPC();
+				ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+			}else{
+				ProgramCounter.decrementPC();
+				ProgramCounter.setPC(getEA(x));
+			}		
+			break;
+		}
+		case JSR:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			x = operands & 0b11;//register number  
+			GPRegister.setReg(ProgramCounter.getPC(), 3);//R3 <- PC+1
+			if(x == 2 || x == 3){
+				//because we have do incrementPC above, so we have to decrement
+				ProgramCounter.decrementPC();
+				ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+			}else{
+				ProgramCounter.decrementPC();
+				ProgramCounter.setPC(getEA(x));
+			}		
+			break;
+		}
+		case RFS:{
+			immed = operands;
+			GPRegister.setReg(immed, 0);
+			System.out.println(GPRegister.getReg(3));
+			ProgramCounter.setPC(GPRegister.getReg(3));
+			break;
+		}
+		case SOB:{
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			GPRegister.setReg(GPRegister.getReg(ac) - 1,ac); //r <- c(r)-1
+			if(GPRegister.getReg(ac) > 0){
+				if(x == 2 || x == 3){
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				}else{
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(getEA(x));
+				}
+			}
+			break;
 		}
 		case AMR:{
 			System.out.println("AMR");

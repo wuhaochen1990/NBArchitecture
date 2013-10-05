@@ -37,11 +37,6 @@ public class Entry extends JFrame {
 	//filepath is present working directory plus Instruction.txt
 	public static String filePath = System.getProperty("user.dir") + "/Instruction.txt";
 	public static String showresult = "";
-	//JLabels
-	private JLabel R0Label;
-	private JLabel R1Label;
-	private JLabel R2Label;
-	private JLabel R3Laebl;
 	private JLabel address;
 	private JLabel content;
 	private JLabel showresultlabel;
@@ -51,10 +46,6 @@ public class Entry extends JFrame {
 	private JLabel memorycontentlabel;
 	//JTextField
 	private JTextField filepath;
-	private JTextField R0TextField;
-	private JTextField R1TextField;
-	private JTextField R2TextField;
-	private JTextField R3TextField;
 	private JTextField addressTextField;
 	private JTextField contentTextField;
 	private JTextField indexTextField;
@@ -72,6 +63,10 @@ public class Entry extends JFrame {
 	private JTextField showX0RegTextField;
 	private JButton showPC;
 	private JTextField showPCTextField;
+	private JLabel registerindexlabel;
+	private JTextField setRegIndexTextField;
+	private JLabel setregcontentlabel;
+	private JTextField setRegContentTextField;
 	
 	
 
@@ -120,8 +115,8 @@ public class Entry extends JFrame {
 		run.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			ReadFile.readfile(filepath.getText().toString());
-			Simulator.run();
+				ReadFile.readfile(filepath.getText().toString());
+				Simulator.run();
 						
 			}
 					
@@ -131,63 +126,31 @@ public class Entry extends JFrame {
 		contentPane.add(panel_reg);
 		panel_reg.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		R0Label = new JLabel("R0");
-		panel_reg.add(R0Label);
+		registerindexlabel = new JLabel("register index");
+		panel_reg.add(registerindexlabel);
 		
-		R0TextField = new JTextField();
-		panel_reg.add(R0TextField);
-		R0TextField.setColumns(5);
+		setRegIndexTextField = new JTextField();
+		panel_reg.add(setRegIndexTextField);
+		setRegIndexTextField.setColumns(10);
 		
-		R1Label = new JLabel("R1");
-		panel_reg.add(R1Label);
+		setregcontentlabel = new JLabel("content");
+		panel_reg.add(setregcontentlabel);
 		
-		R1TextField = new JTextField();
-		panel_reg.add(R1TextField);
-		R1TextField.setColumns(5);
-		
-		R2Label = new JLabel("R2");
-		panel_reg.add(R2Label);
-		
-		R2TextField = new JTextField();
-		panel_reg.add(R2TextField);
-		R2TextField.setColumns(5);
-		
-		R3Laebl = new JLabel("R3");
-		panel_reg.add(R3Laebl);
-		
-		R3TextField = new JTextField();
-		panel_reg.add(R3TextField);
-		R3TextField.setColumns(5);
+		setRegContentTextField = new JTextField();
+		panel_reg.add(setRegContentTextField);
+		setRegContentTextField.setColumns(10);
 		
 		set_reg = new JButton("set reg");
 		panel_reg.add(set_reg);
 		//set_reg listen to the change of the reg
-				set_reg.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if(R0TextField.getText()!=null){
-							int temp = Integer.parseInt(R0TextField.getText().toString());
-							GPRegister.setReg(temp, 0);
-							
-						}
-						if(R1TextField.getText()!=null){
-							int temp = Integer.parseInt(R1TextField.getText().toString());
-							GPRegister.setReg(temp, 1);
-							
-						}
-						if(R2TextField.getText()!=null){
-							int temp = Integer.parseInt(R2TextField.getText().toString());
-							GPRegister.setReg(temp, 2);
-							
-						}
-						if(R3TextField.getText()!=null){
-							int temp = Integer.parseInt(R3TextField.getText().toString());
-							GPRegister.setReg(temp, 3);
-							
-						}
-					}
-					
+		set_reg.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = Integer.parseInt(setRegIndexTextField.getText());
+				int content = Integer.parseInt(setRegContentTextField.getText());
+				GPRegister.setReg(content, index);
+				
+				}	
 				});
 		
 		panel_memory = new JPanel();
