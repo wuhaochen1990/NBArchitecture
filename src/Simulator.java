@@ -15,7 +15,9 @@ public class Simulator {
 	public static final int RFS = 15;
 	public static final int SOB = 16;
 	public static final int AMR = 4;
+	public static final int SMR = 5;
 	public static final int AIR = 6;
+	public static final int SIR = 7;
 	public static final int MUL = 20;
 
 	//the value of some key words
@@ -77,6 +79,7 @@ public class Simulator {
 		//choose the instruction function
 		switch(opcode){
 		case LDR:{
+			System.out.println("LDR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -88,6 +91,7 @@ public class Simulator {
 			break;
 		}
 		case STR:{
+			System.out.println("STR");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
@@ -97,6 +101,7 @@ public class Simulator {
 			break;
 		}
 		case LDA:{
+			System.out.println("LDA");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
@@ -110,6 +115,7 @@ public class Simulator {
 			break;
 		}
 		case LDX:{
+			System.out.println("LDX");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			x = operands&0b11;
@@ -117,6 +123,7 @@ public class Simulator {
 			break;
 		}
 		case STX:{
+			System.out.println("STX");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			x = operands&0b11;
@@ -124,6 +131,7 @@ public class Simulator {
 			break;
 		}
 		case JZ:{
+			System.out.println("JZ");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -145,6 +153,7 @@ public class Simulator {
 			}
 		}
 		case JNE:{
+			System.out.println("JNE");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -167,6 +176,7 @@ public class Simulator {
 			break;
 		}
 		case JCC:{
+			System.out.println("JCC");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			cc = operands & 0b11;//register number  
@@ -189,6 +199,7 @@ public class Simulator {
 			break;
 		}
 		case JMP:{
+			System.out.println("JMP");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			x = operands & 0b11;//register number  
@@ -203,6 +214,7 @@ public class Simulator {
 			break;
 		}
 		case JSR:{
+			System.out.println("JSR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			x = operands & 0b11;//register number  
@@ -218,6 +230,7 @@ public class Simulator {
 			break;
 		}
 		case RFS:{
+			System.out.println("RFS");
 			immed = operands;
 			GPRegister.setReg(immed, 0);
 			System.out.println(GPRegister.getReg(3));
@@ -225,6 +238,7 @@ public class Simulator {
 			break;
 		}
 		case SOB:{
+			System.out.println("SOB");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -255,8 +269,21 @@ public class Simulator {
 			ALU.runALU();
 			break;
 		}
+		case SMR:{
+			System.out.println("SMR");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			ALU.setDestination(ac);//set destination register
+			ALU.setSource(Memory.getDataFromMemory(getEA(x)));//set source content
+			ALU.setOperation(1);//add operation number is 0
+			ALU.runALU();
+			break;
+		}
 		case AIR:{
-			System.out.println("AMR");
+			System.out.println("AIR");
 			immed = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -275,7 +302,28 @@ public class Simulator {
 			}
 			break;
 		}
+		case SIR:{
+			System.out.println("SIR");
+			immed = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			if(immed != 0){
+				if(GPRegister.getReg(ac)==0){
+					GPRegister.setReg(0-immed, ac);
+				}else{
+					ALU.setDestination(ac);//set destination register
+					ALU.setSource(immed);//set source content
+					ALU.setOperation(1);//add operation number is 0
+					ALU.runALU();
+				}
+			}else{
+				//if immed is 0, do nothing
+			
+			}
+			break;
+		}
 		case MUL:{
+			System.out.println("MUL");
 			operands = operands >>> 6;
 			ry = operands & 0b11;
 			operands = operands >>> 2;

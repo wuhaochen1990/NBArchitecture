@@ -63,8 +63,12 @@ public class ReadFile {
 			return 16 << 10;
 		}else if(instruction.equals("AMR")){
 			return 4 << 10;
+		}else if(instruction.equals("SMR")){
+			return 5 << 10;
 		}else if(instruction.equals("AIR")){
 			return 6 << 10;
+		}else if(instruction.equals("SIR")){
+			return 7 << 10;
 		}else if(instruction.equals("MUL")){
 			return 20 << 10;
 		}
