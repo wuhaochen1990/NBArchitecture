@@ -81,6 +81,10 @@ public class ReadFile {
 			return 24 << 10;
 		}else if(instruction.equals("NOT")){
 			return 25 << 10;
+		}else if(instruction.equals("SRC")){
+			return 31 << 10;
+		}else if(instruction.equals("RRC")){
+			return 32 << 10;
 		}
 		return 0;
 	}
@@ -126,17 +130,30 @@ public class ReadFile {
 		}
 		return 0;
 	}
+	//third kind of instruction format for shift/rotate operation
+	public static int Instr2Operands3(String instruction){
+		String[] splited = instruction.split(",");
+		int operands1 = Integer.parseInt(splited[0]) << 7;//r
+		int operands2 = Integer.parseInt(splited[1]);//count
+		int operands3 = Integer.parseInt(splited[2]) << 9;//L/R
+		int operands4 = Integer.parseInt(splited[3]) << 6;
+		int operands = operands1 + operands2 + operands3 +operands4;
+		return operands;
+	}
 	//turn the whole instruction string into binary
 	public static int Instr2Binary(String instruction){
 		String[] splited = instruction.split(" ");
 		//deal with the splited parts with Instr2Opcode and Instr2Operands and return
 		//select the different kind of instr format
-		int max = 25 << 10;
-		int min = 20 << 10;
+		int max = 25 << 10;//max of the second format
+		int min = 20 << 10;//min of the second format
 		int firstpart = Instr2Opcode(splited[0]);
 		if(firstpart <= max & firstpart >= min ){
 			//mul and div instruction have the second kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands2(splited[1]);
+		}else if(firstpart==31<<10 |firstpart==32<<10){
+			//shift and rotate instruction have the third kind of instr format
+			return Instr2Opcode(splited[0]) + Instr2Operands3(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);

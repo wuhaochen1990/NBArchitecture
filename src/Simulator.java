@@ -24,6 +24,8 @@ public class Simulator {
 	public static final int AND = 23;
 	public static final int ORR = 24;
 	public static final int NOT = 25;
+	public static final int SRC = 31;
+	public static final int RRC = 32;
 	
 	//the value of some key words
 	public static int opcode;//opcode
@@ -35,6 +37,10 @@ public class Simulator {
 	public static int rx;//rx and ry is for mul and div instr
 	public static int ry;
 	public static int cc;//condition code for jcc
+	public static int count;
+	public static int LR;
+	public static int AL;
+	public static int r;
 
 	//mdr and mar and ir
 	public static int mdr;
@@ -383,7 +389,7 @@ public class Simulator {
 			rx = operands & 0b11;
 			ALU.setDestination(rx);//set destination register
 			ALU.setSource(ry);//set source content
-			ALU.setOperation(6);//and operation number is 5
+			ALU.setOperation(6);//and operation number is 6
 			ALU.runALU();
 			break;
 		}
@@ -392,7 +398,41 @@ public class Simulator {
 			operands = operands >>> 8;
 			rx = operands & 0b11;
 			ALU.setDestination(rx);//set destination register
-			ALU.setOperation(7);//and operation number is 5
+			ALU.setOperation(7);//and operation number is 7
+			ALU.runALU();
+			break;
+		}
+		case SRC:{
+			System.out.println("SRC");
+			count = operands & 0b1111;
+			operands = operands >>> 6;
+			AL = operands &0b1;
+			operands = operands >>>1;
+			r = operands & 0b11;
+			operands = operands >>>2;
+			LR = operands & 0b1;
+			ALU.setDestination(r);
+			ALU.setOperation(8);//shift operation number is 8
+			ALU.setAL(AL);
+			ALU.setLR(LR);
+			ALU.setCount(count);
+			ALU.runALU();
+			break;
+		}
+		case RRC:{
+			System.out.println("RRC");
+			count = operands & 0b1111;
+			operands = operands >>> 6;
+			AL = operands &0b1;
+			operands = operands >>>1;
+			r = operands & 0b11;
+			operands = operands >>>2;
+			LR = operands & 0b1;
+			ALU.setDestination(r);
+			ALU.setOperation(9);//rotate operation number is 8
+			ALU.setAL(AL);
+			ALU.setLR(LR);
+			ALU.setCount(count);
 			ALU.runALU();
 			break;
 		}

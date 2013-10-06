@@ -2,8 +2,11 @@
 public class ALU {
 	public static int destination;//destination register index 0-4
 	public static int source;//sources of the operation
-	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7
+	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7,shift 8,rotate 9
 	public static int cc[] = new int[16];//condition code
+	public static int LR;//L <- 0,R <- 1
+	public static int AL;//A <- 0,L <- 1
+	public static int count;
 	
 	//set and get
 	public static int getDestination() {
@@ -33,6 +36,37 @@ public class ALU {
 
 	public static void setOperation(int operation) {
 		ALU.operation = operation;
+	}
+
+	
+
+	public static int getLR() {
+		return LR;
+	}
+
+
+	public static void setLR(int lR) {
+		LR = lR;
+	}
+
+
+	public static int getAL() {
+		return AL;
+	}
+
+
+	public static void setAL(int aL) {
+		AL = aL;
+	}
+
+
+	public static int getCount() {
+		return count;
+	}
+
+
+	public static void setCount(int count) {
+		ALU.count = count;
 	}
 
 
@@ -111,6 +145,49 @@ public class ALU {
 				//not
 				int rx = GPRegister.getReg(destination);
 				int result = ~rx;
+				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(8):{
+				//shift
+				int r = GPRegister.getReg(destination);
+				int result;
+				if(AL == 0){
+					//arithmetic shift
+					if(LR == 0){
+						//left
+						result = r << count;
+					}else{
+						//right
+						result = r >> count;
+					}
+				}else{
+					//logical shift
+					if(LR == 0){
+						//left
+						result = r << count;
+					}else{
+						//right
+						result = r >>> count;
+					}
+				}
+				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(9):{
+				//rotate
+				System.out.println("rotate");
+				int r = GPRegister.getReg(destination);
+				System.out.println(r);
+				int result;
+				if(LR == 0){
+					//left
+					
+					result = (r << count & 0b1111111111111111) | (r >>> (16-count));
+				}else{
+					//right
+					result = r >> count | r << (16-count);
+				}
 				GPRegister.setReg(result, destination);
 				break;
 			}
