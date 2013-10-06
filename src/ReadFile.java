@@ -71,6 +71,16 @@ public class ReadFile {
 			return 7 << 10;
 		}else if(instruction.equals("MUL")){
 			return 20 << 10;
+		}else if(instruction.equals("DIV")){
+			return 21 << 10;
+		}else if(instruction.equals("TER")){
+			return 22 << 10;
+		}else if(instruction.equals("AND")){
+			return 23 << 10;
+		}else if(instruction.equals("ORR")){
+			return 24 << 10;
+		}else if(instruction.equals("NOT")){
+			return 25 << 10;
 		}
 		return 0;
 	}

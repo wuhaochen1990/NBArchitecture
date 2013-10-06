@@ -2,7 +2,8 @@
 public class ALU {
 	public static int destination;//destination register index 0-4
 	public static int source;//sources of the operation
-	public static int operation;//operation means add 0 or sub 1 or mul 2  or div 3 
+	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7
+	public static int cc[] = new int[16];//condition code
 	
 	//set and get
 	public static int getDestination() {
@@ -66,7 +67,51 @@ public class ALU {
 			}
 			case(3):{
 				//div
-				
+				int rx = GPRegister.getReg(destination);
+				int ry = GPRegister.getReg(source);
+				if(ry == 0){
+					//set cc(3)=1
+					cc[3]=1;
+				}else{
+					int quotient = rx/ry;
+					int remainder = rx%ry;
+					GPRegister.setReg(quotient, destination);
+					GPRegister.setReg(remainder, destination+1);
+				}
+				break;
+			}
+			case(4):{
+				//test equality
+				int rx = GPRegister.getReg(destination);
+				int ry = GPRegister.getReg(source);
+				if(rx == ry){
+					cc[4] = 1;
+				}else{
+					cc[4] = 0;
+				}
+				break;
+			}
+			case(5):{
+				//and
+				int rx = GPRegister.getReg(destination);
+				int ry = GPRegister.getReg(source);
+				int result = rx & ry;
+				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(6):{
+				//or
+				int rx = GPRegister.getReg(destination);
+				int ry = GPRegister.getReg(source);
+				int result = rx | ry;
+				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(7):{
+				//not
+				int rx = GPRegister.getReg(destination);
+				int result = ~rx;
+				GPRegister.setReg(result, destination);
 				break;
 			}
 		}

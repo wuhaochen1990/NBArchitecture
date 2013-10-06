@@ -19,7 +19,12 @@ public class Simulator {
 	public static final int AIR = 6;
 	public static final int SIR = 7;
 	public static final int MUL = 20;
-
+	public static final int DIV = 21;
+	public static final int TER = 22;
+	public static final int AND = 23;
+	public static final int ORR = 24;
+	public static final int NOT = 25;
+	
 	//the value of some key words
 	public static int opcode;//opcode
 	public static int operands;//numbers after the opcode
@@ -330,7 +335,64 @@ public class Simulator {
 			rx = operands & 0b11;
 			ALU.setDestination(rx);//set destination register
 			ALU.setSource(ry);//set source content
-			ALU.setOperation(2);//mul operation number is 0
+			ALU.setOperation(2);//mul operation number is 2
+			ALU.runALU();
+			break;
+		}
+		case DIV:{
+			System.out.println("DIV");
+			operands = operands >>> 6;
+			ry = operands & 0b11;
+			operands = operands >>> 2;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setSource(ry);//set source content
+			ALU.setOperation(3);//div operation number is 3
+			ALU.runALU();
+			break;
+		}
+		case TER:{
+			System.out.println("TER");
+			operands = operands >>> 6;
+			ry = operands & 0b11;
+			operands = operands >>> 2;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setSource(ry);//set source content
+			ALU.setOperation(4);//ter operation number is 4
+			ALU.runALU();
+			break;
+		}
+		case AND:{
+			System.out.println("AND");
+			operands = operands >>> 6;
+			ry = operands & 0b11;
+			operands = operands >>> 2;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setSource(ry);//set source content
+			ALU.setOperation(5);//and operation number is 5
+			ALU.runALU();
+			break;
+		}
+		case ORR:{
+			System.out.println("ORR");
+			operands = operands >>> 6;
+			ry = operands & 0b11;
+			operands = operands >>> 2;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setSource(ry);//set source content
+			ALU.setOperation(6);//and operation number is 5
+			ALU.runALU();
+			break;
+		}
+		case NOT:{
+			System.out.println("NOT");
+			operands = operands >>> 8;
+			rx = operands & 0b11;
+			ALU.setDestination(rx);//set destination register
+			ALU.setOperation(7);//and operation number is 5
 			ALU.runALU();
 			break;
 		}
