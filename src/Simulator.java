@@ -26,6 +26,9 @@ public class Simulator {
 	public static final int NOT = 25;
 	public static final int SRC = 31;
 	public static final int RRC = 32;
+	public static final int IN = 61;
+	public static final int OUT = 62;
+	public static final int CHK = 63;
 	
 	//the value of some key words
 	public static int opcode;//opcode
@@ -41,6 +44,7 @@ public class Simulator {
 	public static int LR;
 	public static int AL;
 	public static int r;
+	public static int devid;//device id
 
 	//mdr and mar and ir
 	public static int mdr;
@@ -434,6 +438,28 @@ public class Simulator {
 			ALU.setLR(LR);
 			ALU.setCount(count);
 			ALU.runALU();
+			break;
+		}
+		case IN:{
+			System.out.println("IN");
+			devid = operands & 0b11111;
+			operands = operands >>> 7;
+			r = operands & 0b11;
+			IO.setDevid(devid);
+			IO.setR(r);
+			IO.setOperation(0);//IN operation is 0
+			IO.runIO();
+			break;
+		}
+		case OUT:{
+			System.out.println("OUT");
+			devid = operands & 0b11111;
+			operands = operands >>> 7;
+			r = operands & 0b11;
+			IO.setDevid(devid);
+			IO.setR(r);
+			IO.setOperation(1);//OUT operation is 1
+			IO.runIO();
 			break;
 		}
 		}

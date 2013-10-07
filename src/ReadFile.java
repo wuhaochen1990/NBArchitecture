@@ -85,6 +85,12 @@ public class ReadFile {
 			return 31 << 10;
 		}else if(instruction.equals("RRC")){
 			return 32 << 10;
+		}else if(instruction.equals("IN")){
+			return 61 << 10;
+		}else if(instruction.equals("OUT")){
+			return 62 << 10;
+		}else if(instruction.equals("CHK")){
+			return 63 << 10;
 		}
 		return 0;
 	}
@@ -140,6 +146,14 @@ public class ReadFile {
 		int operands = operands1 + operands2 + operands3 +operands4;
 		return operands;
 	}
+	//fourth kind of instruction format for I/O operation
+	public static int Instr2Operands4(String instruction){
+		String[] splited = instruction.split(",");
+		int operands1 = Integer.parseInt(splited[0]) << 7;
+		int operands2 = Integer.parseInt(splited[1]);
+		int operands = operands1 + operands2;
+		return operands;
+	}
 	//turn the whole instruction string into binary
 	public static int Instr2Binary(String instruction){
 		String[] splited = instruction.split(" ");
@@ -151,9 +165,11 @@ public class ReadFile {
 		if(firstpart <= max & firstpart >= min ){
 			//mul and div instruction have the second kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands2(splited[1]);
-		}else if(firstpart==31<<10 |firstpart==32<<10){
+		}else if(firstpart==31<<10 | firstpart==32<<10){
 			//shift and rotate instruction have the third kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands3(splited[1]);
+		}else if(firstpart==61<<10 | firstpart==62<<10 | firstpart==63<<10){
+			return Instr2Opcode(splited[0]) + Instr2Operands4(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);

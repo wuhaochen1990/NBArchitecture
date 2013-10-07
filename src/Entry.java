@@ -58,7 +58,7 @@ public class Entry extends JFrame {
 	private JButton show_memory;
 	
 	private JTextField showmemorycontentTextField;
-	private JPanel panel;
+	private JPanel panel_showpcx0;
 	private JButton show_X0Reg;
 	private JTextField showX0RegTextField;
 	private JButton showPC;
@@ -67,6 +67,15 @@ public class Entry extends JFrame {
 	private JTextField setRegIndexTextField;
 	private JLabel setregcontentlabel;
 	private JTextField setRegContentTextField;
+	private JPanel panel;
+	private JLabel keyboardLabel;
+	private JButton keyboardButton1;
+	private JButton keyboardButton2;
+	private JButton keyboardButton3;
+	private JButton keyboardButton4;
+	private JPanel panel_1;
+	private JLabel printerLabel;
+	private JTextField printerTextfield;
 	
 	
 
@@ -91,7 +100,7 @@ public class Entry extends JFrame {
 	 */
 	public Entry() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 600, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -117,6 +126,11 @@ public class Entry extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ReadFile.readfile(filepath.getText().toString());
 				Simulator.run();
+				
+				//console printer
+				if(Printer.active == 1){
+					printerTextfield.setText(Integer.toString(Printer.content));
+				}
 						
 			}
 					
@@ -256,8 +270,8 @@ public class Entry extends JFrame {
 		panel_showmemoy.add(showmemorycontentTextField);
 		showmemorycontentTextField.setColumns(10);
 		
-		panel = new JPanel();
-		contentPane.add(panel);
+		panel_showpcx0 = new JPanel();
+		contentPane.add(panel_showpcx0);
 		
 		show_X0Reg = new JButton("show X0");
 		show_X0Reg.addActionListener(new ActionListener() {
@@ -265,10 +279,10 @@ public class Entry extends JFrame {
 				showX0RegTextField.setText(Integer.toString(X0Reg.getX0()));
 			}
 		});
-		panel.add(show_X0Reg);
+		panel_showpcx0.add(show_X0Reg);
 		
 		showX0RegTextField = new JTextField();
-		panel.add(showX0RegTextField);
+		panel_showpcx0.add(showX0RegTextField);
 		showX0RegTextField.setColumns(10);
 		
 		showPC = new JButton("show pc");
@@ -277,11 +291,73 @@ public class Entry extends JFrame {
 				showPCTextField.setText(Integer.toString(ProgramCounter.getPC()));
 			}
 		});
-		panel.add(showPC);
+		panel_showpcx0.add(showPC);
 		
 		showPCTextField = new JTextField();
-		panel.add(showPCTextField);
+		panel_showpcx0.add(showPCTextField);
 		showPCTextField.setColumns(10);
+		
+		panel = new JPanel();
+		contentPane.add(panel);
+		
+		keyboardLabel = new JLabel("keyboard");
+		panel.add(keyboardLabel);
+		
+		keyboardButton1 = new JButton("key1");
+		keyboardButton1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//only if the keyboard is active
+					Keyboard.setContent(1);;//value of key 1 is 1
+					Keyboard.runKeyboard();
+					Keyboard.inactivateKeyboard();;//inactivate the keyboard
+				}
+			}
+		});
+		panel.add(keyboardButton1);
+		
+		keyboardButton2 = new JButton("key2");
+		keyboardButton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.setContent(2);;//value of key 2 is 2
+					Keyboard.inactivateKeyboard();
+				}
+			}
+		});
+		panel.add(keyboardButton2);
+		
+		keyboardButton3 = new JButton("key3");
+		keyboardButton3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.setContent(3);;//value of key 3 is 3
+					Keyboard.inactivateKeyboard();
+				}
+			}
+		});
+		panel.add(keyboardButton3);
+		
+		keyboardButton4 = new JButton("key4");
+		keyboardButton4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.setContent(4);;//value of key 4 is 4
+					Keyboard.inactivateKeyboard();
+				}
+			}
+		});
+		panel.add(keyboardButton4);
+		
+		panel_1 = new JPanel();
+		contentPane.add(panel_1);
+		
+		printerLabel = new JLabel("console printer");
+		panel_1.add(printerLabel);
+		
+		printerTextfield = new JTextField();
+		panel_1.add(printerTextfield);
+		printerTextfield.setColumns(30);
 		
 		
 		
