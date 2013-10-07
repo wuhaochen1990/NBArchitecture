@@ -52,6 +52,25 @@ public class IO {
 		}
 		case(2):{
 			//CHK
+			switch(devid){
+			case(0):{
+				//keyboard
+				int status = Keyboard.active;
+				GPRegister.setReg(status, r);
+				break;
+			}
+			case(1):{
+				//printer
+				int status = Printer.active;
+				GPRegister.setReg(status, r);
+				break;
+			}
+			case(2):{
+				//card reader
+				
+				break;
+			}
+			}
 			break;
 		}
 		}

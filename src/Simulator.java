@@ -462,6 +462,17 @@ public class Simulator {
 			IO.runIO();
 			break;
 		}
+		case CHK:{
+			System.out.println("CHK");
+			devid = operands & 0b11111;
+			operands = operands >>> 7;
+			r = operands & 0b11;
+			IO.setDevid(devid);
+			IO.setR(r);
+			IO.setOperation(2);//CHK operation is 2
+			IO.runIO();
+			break;
+		}
 		}
 		}
 		
