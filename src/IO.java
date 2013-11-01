@@ -31,6 +31,7 @@ public class IO {
 			switch(devid){
 			case(0):{
 				//keyboard
+				Keyboard.setInterrupt(0);//set the interrupt
 				Keyboard.activateKeyboard();
 				break;
 			}

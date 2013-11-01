@@ -3,6 +3,7 @@ public class Keyboard {
 	public static int active;//status of the keyboard, 0 is inactive and 1 is active
 	public static int r;//destination register index
 	public static int content;//content of the key 
+	public static int interrupt=1;//interrupt
 	
 	public static int getActive() {
 		return active;
@@ -32,6 +33,12 @@ public class Keyboard {
 		active = 0;
 	}
 	
+	public static int getInterrupt() {
+		return interrupt;
+	}
+	public static void setInterrupt(int interrupt) {
+		Keyboard.interrupt = interrupt;
+	}
 	public static void runKeyboard(){
 		
 		GPRegister.setReg(content, r);

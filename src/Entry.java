@@ -69,10 +69,7 @@ public class Entry extends JFrame {
 	private JTextField setRegContentTextField;
 	private JPanel panel;
 	private JLabel keyboardLabel;
-	private JButton keyboardButton1;
-	private JButton keyboardButton2;
-	private JButton keyboardButton3;
-	private JButton keyboardButton4;
+	private JButton keyboardButton;
 	private JPanel panel_1;
 	private JLabel printerLabel;
 	private JTextField printerTextfield;
@@ -82,6 +79,7 @@ public class Entry extends JFrame {
 	private JButton showCacheButton;
 	private JLabel cachecontentlabel;
 	private JTextField cacheContentTextField;
+	private JTextField KeyboardtextField;
 	
 	
 
@@ -131,6 +129,7 @@ public class Entry extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ReadFile.readfile(filepath.getText().toString());
+				
 				Simulator.run();
 				
 				//console printer
@@ -309,54 +308,27 @@ public class Entry extends JFrame {
 		keyboardLabel = new JLabel("keyboard");
 		panel.add(keyboardLabel);
 		
-		keyboardButton1 = new JButton("key1");
-		keyboardButton1.addActionListener(new ActionListener() {
+		keyboardButton = new JButton("runKeyboard");
+		keyboardButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Keyboard.active == 1){
+					Keyboard.setInterrupt(1);//end the interrupt
 					//only if the keyboard is active
-					Keyboard.setContent(1);;//value of key 1 is 1
+					int KeyboardContent = Integer.parseInt(KeyboardtextField.getText().toString());
+					Keyboard.setContent(KeyboardContent);;//value of key 
 					Keyboard.runKeyboard();
 					Keyboard.inactivateKeyboard();;//inactivate the keyboard
 				}
 			}
 		});
-		panel.add(keyboardButton1);
 		
-		keyboardButton2 = new JButton("key2");
-		keyboardButton2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Keyboard.active == 1){
-					Keyboard.setContent(2);;//value of key 2 is 2
-					Keyboard.inactivateKeyboard();
-				}
-			}
-		});
-		panel.add(keyboardButton2);
-		
-		keyboardButton3 = new JButton("key3");
-		keyboardButton3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Keyboard.active == 1){
-					Keyboard.setContent(3);;//value of key 3 is 3
-					Keyboard.inactivateKeyboard();
-				}
-			}
-		});
-		panel.add(keyboardButton3);
-		
-		keyboardButton4 = new JButton("key4");
-		keyboardButton4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Keyboard.active == 1){
-					Keyboard.setContent(4);;//value of key 4 is 4
-					Keyboard.inactivateKeyboard();
-				}
-			}
-		});
-		panel.add(keyboardButton4);
+		KeyboardtextField = new JTextField();
+		panel.add(KeyboardtextField);
+		KeyboardtextField.setColumns(10);
+		panel.add(keyboardButton);
 		
 		panel_1 = new JPanel();
-		contentPane.add(panel_1);
+		contentPane.add(panel_1); 
 		
 		printerLabel = new JLabel("console printer");
 		panel_1.add(printerLabel);

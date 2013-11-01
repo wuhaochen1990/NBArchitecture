@@ -103,6 +103,9 @@ public class Simulator {
 	public static void run(){
 		//run until there is not instruction in the memory where pc point to
 		while(Memory.getDataFromMemory(ProgramCounter.getPC()) != 0){
+		if(Keyboard.getInterrupt() == 0){
+			break;
+		}
 		//fetch the instruction from the memory
 		mar = ProgramCounter.getPC();//mar <- pc
 		ProgramCounter.incrementPC();//pc ++
