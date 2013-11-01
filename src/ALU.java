@@ -77,6 +77,7 @@ public class ALU {
 				int data1 = GPRegister.getReg(destination);
 				int data2 = source;
 				int result = data1 + data2;
+				//add overflow
 				GPRegister.setReg(result, destination);
 				break;
 			}

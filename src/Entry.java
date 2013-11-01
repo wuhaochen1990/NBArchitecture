@@ -76,6 +76,12 @@ public class Entry extends JFrame {
 	private JPanel panel_1;
 	private JLabel printerLabel;
 	private JTextField printerTextfield;
+	private JPanel showcachepanel;
+	private JLabel cacheaddresslabel;
+	private JTextField cacheIndexTextField;
+	private JButton showCacheButton;
+	private JLabel cachecontentlabel;
+	private JTextField cacheContentTextField;
 	
 	
 
@@ -358,6 +364,32 @@ public class Entry extends JFrame {
 		printerTextfield = new JTextField();
 		panel_1.add(printerTextfield);
 		printerTextfield.setColumns(30);
+		
+		showcachepanel = new JPanel();
+		contentPane.add(showcachepanel);
+		
+		cacheaddresslabel = new JLabel("cache index");
+		showcachepanel.add(cacheaddresslabel);
+		
+		cacheIndexTextField = new JTextField();
+		showcachepanel.add(cacheIndexTextField);
+		cacheIndexTextField.setColumns(10);
+		
+		showCacheButton = new JButton("show cache");
+		showCacheButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = Integer.parseInt(cacheIndexTextField.getText().toString());
+				cacheContentTextField.setText(Integer.toString(Cache.cache_content[index]));
+			}
+		});
+		showcachepanel.add(showCacheButton);
+		
+		cachecontentlabel = new JLabel("cache content");
+		showcachepanel.add(cachecontentlabel);
+		
+		cacheContentTextField = new JTextField();
+		showcachepanel.add(cacheContentTextField);
+		cacheContentTextField.setColumns(10);
 		
 		
 		

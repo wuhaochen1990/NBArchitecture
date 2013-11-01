@@ -8,6 +8,9 @@ public class Memory {
 	//empty index of the memory
 	public static int emptyIndex = 2;
 	
+	
+	
+	
 //	//show memory
 //	public static void showMemory(){
 //		System.out.println("This is instruction memory!");
@@ -39,6 +42,8 @@ public class Memory {
 //		System.out.println("Content: " + Integer.toBinaryString(memory[index])+"\n");
 //	}
 	
+	
+
 	//set instruction to memory
 	public static void setInstr2Memory(int instruction){
 		//emptyIndex point to the empty position of the memory

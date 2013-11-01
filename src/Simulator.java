@@ -74,7 +74,31 @@ public class Simulator {
 		}
 		return ea;
 	}
-	
+	//cache read
+	public static void cache_read(){
+		Cache.isMiss(mar);
+		if(Cache.miss == 1){
+			//cache hit
+			mdr = Cache.cacheHit(mar);
+		}else{
+			//cache miss, get data from memory
+			Cache.cacheMiss(mar);
+			mdr = Memory.getDataFromMemory(mar);
+		}
+	}
+	//cache write
+	public static void cache_write(){
+		Cache.isMiss(mar);
+		if(Cache.miss == 1){
+			//cache hit, write the content to both cache and memory
+			Cache.cacheWrite(mar, mdr);
+			Memory.setData2Memory(mdr, mar);
+		}else{
+			//cache miss, just write the content to memory, and then change the cache
+			Memory.setData2Memory(mdr, mar);
+			Cache.cacheWrite(mar, mdr);
+		}
+	}
 	//run the instruction
 	public static void run(){
 		//run until there is not instruction in the memory where pc point to
@@ -101,7 +125,10 @@ public class Simulator {
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
 			mar = getEA(x);
-			mdr = Memory.getDataFromMemory(mar);
+			
+			//cache operation
+			cache_read();
+			
 			GPRegister.setReg(mdr, ac);
 			break;
 		}
@@ -112,7 +139,10 @@ public class Simulator {
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
-			Memory.setData2Memory(GPRegister.getReg(ac), getEA(x));
+			mar = getEA(x);
+			mdr = GPRegister.getReg(ac);
+			//cache operation
+			cache_write();
 			break;
 		}
 		case LDA:{
@@ -122,10 +152,13 @@ public class Simulator {
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
+			mar = getEA(x);
+			//cache operation
+			cache_read();
 			if(x == 2 || x == 3){
-				GPRegister.setReg(Memory.getDataFromMemory(getEA(x)), ac);
+				GPRegister.setReg(mdr, ac);
 			}else{
-				GPRegister.setReg(getEA(x), ac);
+				GPRegister.setReg(mar, ac);
 			}
 			break;
 		}
@@ -134,7 +167,9 @@ public class Simulator {
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			x = operands&0b11;
-			X0Reg.setX0(getEA(x));
+			mar = getEA(x);
+			cache_read();
+			X0Reg.setX0(mdr);
 			break;
 		}
 		case STX:{
@@ -142,7 +177,10 @@ public class Simulator {
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			x = operands&0b11;
-			Memory.setData2Memory(X0Reg.getX0(), getEA(x));
+			mar = getEA(x);
+			mdr = X0Reg.getX0();
+			//cache operation
+			cache_write();
 			break;
 		}
 		case JZ:{
@@ -152,11 +190,13 @@ public class Simulator {
 			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			if(GPRegister.getReg(ac) == 0){
 				if(x == 2 || x == 3){
 					//because we have do incrementPC above, so we have to decrement
 					ProgramCounter.decrementPC();
-					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+					ProgramCounter.setPC(mdr);
 				}else{
 					ProgramCounter.decrementPC();
 					ProgramCounter.setPC(getEA(x));
@@ -166,6 +206,7 @@ public class Simulator {
 				ProgramCounter.decrementPC();
 				ProgramCounter.incrementPC();
 			}
+			break;
 		}
 		case JNE:{
 			System.out.println("JNE");
@@ -174,11 +215,13 @@ public class Simulator {
 			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			if(GPRegister.getReg(ac) != 0){
 				if(x == 2 || x == 3){
 					//because we have do incrementPC above, so we have to decrement
 					ProgramCounter.decrementPC();
-					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+					ProgramCounter.setPC(mdr);
 				}else{
 					ProgramCounter.decrementPC();
 					ProgramCounter.setPC(getEA(x));
@@ -197,11 +240,13 @@ public class Simulator {
 			cc = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			if(cc == 1){
 				if(x == 2 || x == 3){
 					//because we have do incrementPC above, so we have to decrement
 					ProgramCounter.decrementPC();
-					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+					ProgramCounter.setPC(mdr);
 				}else{
 					ProgramCounter.decrementPC();
 					ProgramCounter.setPC(getEA(x));
@@ -217,11 +262,13 @@ public class Simulator {
 			System.out.println("JMP");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
-			x = operands & 0b11;//register number  
+			x = operands & 0b11;//I IX 
+			mar = getEA(x);
+			cache_read();
 			if(x == 2 || x == 3){
 				//because we have do incrementPC above, so we have to decrement
 				ProgramCounter.decrementPC();
-				ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				ProgramCounter.setPC(mdr);
 			}else{
 				ProgramCounter.decrementPC();
 				ProgramCounter.setPC(getEA(x));
@@ -232,15 +279,21 @@ public class Simulator {
 			System.out.println("JSR");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
-			x = operands & 0b11;//register number  
+			x = operands & 0b11;//I IX
+			mar = getEA(x);
+			cache_read();
 			GPRegister.setReg(ProgramCounter.getPC(), 3);//R3 <- PC+1
 			if(x == 2 || x == 3){
 				//because we have do incrementPC above, so we have to decrement
 				ProgramCounter.decrementPC();
-				ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+				ProgramCounter.setPC(mdr);
+				//in the memory, argument starts at 1000
+				GPRegister.setReg(Memory.getDataFromMemory(1000), 0);
 			}else{
 				ProgramCounter.decrementPC();
 				ProgramCounter.setPC(getEA(x));
+				//in the memory, argument starts at 1000
+				GPRegister.setReg(Memory.getDataFromMemory(1000), 0);
 			}		
 			break;
 		}
@@ -259,11 +312,13 @@ public class Simulator {
 			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			GPRegister.setReg(GPRegister.getReg(ac) - 1,ac); //r <- c(r)-1
 			if(GPRegister.getReg(ac) > 0){
 				if(x == 2 || x == 3){
 					ProgramCounter.decrementPC();
-					ProgramCounter.setPC(Memory.getDataFromMemory(getEA(x)));
+					ProgramCounter.setPC(mdr);
 				}else{
 					ProgramCounter.decrementPC();
 					ProgramCounter.setPC(getEA(x));
@@ -278,8 +333,10 @@ public class Simulator {
 			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			ALU.setDestination(ac);//set destination register
-			ALU.setSource(Memory.getDataFromMemory(getEA(x)));//set source content
+			ALU.setSource(mdr);//set source content
 			ALU.setOperation(0);//add operation number is 0
 			ALU.runALU();
 			break;
@@ -291,8 +348,10 @@ public class Simulator {
 			ac = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
 			ALU.setDestination(ac);//set destination register
-			ALU.setSource(Memory.getDataFromMemory(getEA(x)));//set source content
+			ALU.setSource(mdr);//set source content
 			ALU.setOperation(1);//add operation number is 0
 			ALU.runALU();
 			break;
