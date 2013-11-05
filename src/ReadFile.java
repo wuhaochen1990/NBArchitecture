@@ -152,6 +152,8 @@ public class ReadFile {
 		int operands1 = Integer.parseInt(splited[0]) << 7;
 		int operands2 = Integer.parseInt(splited[1]);
 		int operands = operands1 + operands2;
+		System.out.println(operands1);
+		System.out.println(operands2);
 		return operands;
 	}
 	//turn the whole instruction string into binary
@@ -169,6 +171,7 @@ public class ReadFile {
 			//shift and rotate instruction have the third kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands3(splited[1]);
 		}else if(firstpart==61<<10 | firstpart==62<<10 | firstpart==63<<10){
+			System.out.println("IO operation");
 			return Instr2Opcode(splited[0]) + Instr2Operands4(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format

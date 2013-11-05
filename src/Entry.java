@@ -79,7 +79,17 @@ public class Entry extends JFrame {
 	private JButton showCacheButton;
 	private JLabel cachecontentlabel;
 	private JTextField cacheContentTextField;
-	private JTextField KeyboardtextField;
+	private JButton NO1Button;
+	private JButton NO2Button;
+	private JButton NO3Button;
+	private JButton NO0Button;
+	private JButton NO4Button;
+	private JPanel keyboardPanel2;
+	private JButton NO5Button;
+	private JButton NO6Button;
+	private JButton NO7Button;
+	private JButton NO8Button;
+	private JButton NO9Button;
 	
 	
 
@@ -308,24 +318,151 @@ public class Entry extends JFrame {
 		keyboardLabel = new JLabel("keyboard");
 		panel.add(keyboardLabel);
 		
-		keyboardButton = new JButton("runKeyboard");
+		keyboardButton = new JButton("Enter");
 		keyboardButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Keyboard.active == 1){
-					Keyboard.setInterrupt(1);//end the interrupt
-					//only if the keyboard is active
-					int KeyboardContent = Integer.parseInt(KeyboardtextField.getText().toString());
-					Keyboard.setContent(KeyboardContent);;//value of key 
-					Keyboard.runKeyboard();
-					Keyboard.inactivateKeyboard();;//inactivate the keyboard
+				//inactivate the keyboard
+				Keyboard.inactivateKeyboard();
+				//return buffer 
+				Keyboard.runKeyboard();
+				//end the interrupt
+				Keyboard.interrupt=1;
+				//rerun the program
+				Simulator.run();
+				System.out.println(Printer.active);
+				//console printer
+				if(Printer.active == 1){
+					System.out.println("printer active!");
+					printerTextfield.setText(Integer.toString(Printer.content));
 				}
+				
 			}
 		});
 		
-		KeyboardtextField = new JTextField();
-		panel.add(KeyboardtextField);
-		KeyboardtextField.setColumns(10);
+		NO0Button = new JButton("0");
+		NO0Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//append 0 into buffer
+					Keyboard.append2Buffer(0, Keyboard.index);
+					//increase the index
+					Keyboard.increIndex();
+				}
+			}
+		});
+		panel.add(NO0Button);
+		
+		NO1Button = new JButton("1");
+		NO1Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//append 1 into buffer
+					Keyboard.append2Buffer(1, Keyboard.index);
+					//increase the index
+					Keyboard.increIndex();
+				}
+			}
+		});
+		panel.add(NO1Button);
+		
+		NO2Button = new JButton("2");
+		NO2Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//append 2 into buffer
+					Keyboard.append2Buffer(2, Keyboard.index);
+					//increase the index
+					Keyboard.increIndex();
+				}
+				
+			}
+		});
+		panel.add(NO2Button);
+		
+		NO3Button = new JButton("3");
+		NO3Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//append 3 into buffer
+					Keyboard.append2Buffer(3, Keyboard.index);
+					///increase the index
+					Keyboard.increIndex();
+				}
+			}
+		});
+		panel.add(NO3Button);
+		
+		NO4Button = new JButton("4");
+		NO4Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					//apend 4 into buffer
+					Keyboard.append2Buffer(4, Keyboard.index);
+					//increase the index
+					Keyboard.increIndex();
+				}
+			}
+		});
+		panel.add(NO4Button);
 		panel.add(keyboardButton);
+		
+		keyboardPanel2 = new JPanel();
+		contentPane.add(keyboardPanel2);
+		
+		NO5Button = new JButton("5");
+		NO5Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(5, Keyboard.index);
+					Keyboard.increIndex();
+				}
+			}
+		});
+		keyboardPanel2.add(NO5Button);
+		
+		NO6Button = new JButton("6");
+		NO6Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(6, Keyboard.index);
+					Keyboard.increIndex();
+				}
+			}
+		});
+		keyboardPanel2.add(NO6Button);
+		
+		NO7Button = new JButton("7");
+		NO7Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(7, Keyboard.index);
+					Keyboard.increIndex();
+				}
+			}
+		});
+		keyboardPanel2.add(NO7Button);
+		
+		NO8Button = new JButton("8");
+		NO8Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(8, Keyboard.index);
+					Keyboard.increIndex();
+				}
+			}
+		});
+		keyboardPanel2.add(NO8Button);
+		
+		NO9Button = new JButton("9");
+		NO9Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(9, Keyboard.index);
+					Keyboard.increIndex();
+				}
+			}
+		});
+		keyboardPanel2.add(NO9Button);
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1); 

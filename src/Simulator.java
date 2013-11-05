@@ -504,9 +504,13 @@ public class Simulator {
 		}
 		case IN:{
 			System.out.println("IN");
+			System.out.println(Integer.toBinaryString(operands));
 			devid = operands & 0b11111;
 			operands = operands >>> 7;
+			System.out.println(operands);
 			r = operands & 0b11;
+			System.out.println(r);
+
 			IO.setDevid(devid);
 			IO.setR(r);
 			IO.setOperation(0);//IN operation is 0

@@ -32,6 +32,7 @@ public class IO {
 			case(0):{
 				//keyboard
 				Keyboard.setInterrupt(0);//set the interrupt
+				Keyboard.setR(r);
 				Keyboard.activateKeyboard();
 				break;
 			}
@@ -47,6 +48,7 @@ public class IO {
 			if(devid == 1){
 				//OUT only works on console printer whose devid is 1
 				Printer.activatePrinter();//activate the printer
+				
 				Printer.setContent(GPRegister.getReg(r));//content to print
 			}
 			break;
