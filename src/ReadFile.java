@@ -27,6 +27,7 @@ public class ReadFile {
 						//print the instruction
 						System.out.println(instruction+"\n");
 						//turn the instruction string to binary and write to the memory
+						System.out.println("instr2Bin:"+Integer.toBinaryString(Instr2Binary(instruction)));
 						Memory.setInstr2Memory(Instr2Binary(instruction));
 					}
 				}catch(Exception ex){
@@ -175,6 +176,8 @@ public class ReadFile {
 			return Instr2Opcode(splited[0]) + Instr2Operands4(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format
+			System.out.println("operands="+Instr2Operands1(splited[1]));
+			System.out.println("opcode="+Instr2Opcode(splited[0]));
 			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);
 		}
 		

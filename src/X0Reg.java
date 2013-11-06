@@ -1,7 +1,7 @@
 
 public class X0Reg {
 	//content of X0 register
-	public static int x0 = 0;
+	public static int x0 = 1000;
 	//get and set function
 	public static int getX0() {
 		return x0;

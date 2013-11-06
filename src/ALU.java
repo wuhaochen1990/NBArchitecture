@@ -3,7 +3,7 @@ public class ALU {
 	public static int destination;//destination register index 0-4
 	public static int source;//sources of the operation
 	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7,shift 8,rotate 9
-	public static int cc[] = new int[16];//condition code
+	public static int cc[] = new int[16];//condition code. cc[0] is for judge whether the result of the subtract is negative 
 	public static int LR;//L <- 0,R <- 1
 	public static int AL;//A <- 0,L <- 1
 	public static int count;
@@ -86,6 +86,12 @@ public class ALU {
 				int data1 = GPRegister.getReg(destination);
 				int data2 = source;
 				int result = data1 - data2;
+				if(result >= 0){
+					//set the cc
+					Simulator.cc = 1;
+				}else{
+					Simulator.cc = 0;
+				}
 				GPRegister.setReg(result, destination);
 				break;
 			}

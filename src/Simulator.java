@@ -137,13 +137,21 @@ public class Simulator {
 		}
 		case STR:{
 			System.out.println("STR");
+			System.out.println("operands="+Integer.toBinaryString(operands));
+
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
+			System.out.println("ac="+Integer.toString(ac));
+			System.out.println("address="+Integer.toString(Address));
+			System.out.println("x="+Integer.toString(x));
+
 			mar = getEA(x);
+			System.out.println("mar="+Integer.toString(mar));
 			mdr = GPRegister.getReg(ac);
+			System.out.println("mdr="+Integer.toString(mdr));
 			//cache operation
 			cache_write();
 			break;
@@ -240,7 +248,7 @@ public class Simulator {
 			System.out.println("JCC");
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
-			cc = operands & 0b11;//register number  
+//			cc = operands & 0b11;//register number  
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
 			mar = getEA(x);
