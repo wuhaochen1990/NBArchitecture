@@ -59,6 +59,7 @@ public class IO {
 			case(0):{
 				//keyboard
 				int status = Keyboard.active;
+				System.out.println("keyboard active:"+Integer.toString(status));
 				GPRegister.setReg(status, r);
 				break;
 			}

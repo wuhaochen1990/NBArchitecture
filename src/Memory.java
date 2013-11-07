@@ -1,12 +1,13 @@
 
 public class Memory {
 	
-	//the max address of the memory
+	//the max address of the data memory
 	public static final int MAX_ADDRESS=9999;
 	//memory content
+	public static final int[] instructionMemory = new int[500];
 	public static final int[] memory = new int[MAX_ADDRESS+1];
 	//empty index of the memory
-	public static int emptyIndex = 2;
+	public static int emptyIndex = 1;
 	
 	
 	
@@ -47,12 +48,16 @@ public class Memory {
 	//set instruction to memory
 	public static void setInstr2Memory(int instruction){
 		//emptyIndex point to the empty position of the memory
-		if(memory[emptyIndex] == 0){
-			memory[emptyIndex] = instruction;
+		if(instructionMemory[emptyIndex] == 0){
+			instructionMemory[emptyIndex] = instruction;
 			emptyIndex += 1;
 		}else{
 			System.out.println("Full memory!");
 		}
+	}
+	//get instruction from memory
+	public static int getInstrFromMemory(int address){
+		return instructionMemory[address];
 	}
 	
 	//set data into memory

@@ -27,7 +27,6 @@ public class ReadFile {
 						//print the instruction
 						System.out.println(instruction+"\n");
 						//turn the instruction string to binary and write to the memory
-						System.out.println("instr2Bin:"+Integer.toBinaryString(Instr2Binary(instruction)));
 						Memory.setInstr2Memory(Instr2Binary(instruction));
 					}
 				}catch(Exception ex){
@@ -62,6 +61,8 @@ public class ReadFile {
 			return 15 << 10;
 		}else if(instruction.equals("SOB")){
 			return 16 << 10;
+		}else if(instruction.equals("JGE")){
+			return 17 << 10;
 		}else if(instruction.equals("AMR")){
 			return 4 << 10;
 		}else if(instruction.equals("SMR")){
@@ -153,8 +154,7 @@ public class ReadFile {
 		int operands1 = Integer.parseInt(splited[0]) << 7;
 		int operands2 = Integer.parseInt(splited[1]);
 		int operands = operands1 + operands2;
-		System.out.println(operands1);
-		System.out.println(operands2);
+	
 		return operands;
 	}
 	//turn the whole instruction string into binary
@@ -172,12 +172,11 @@ public class ReadFile {
 			//shift and rotate instruction have the third kind of instr format
 			return Instr2Opcode(splited[0]) + Instr2Operands3(splited[1]);
 		}else if(firstpart==61<<10 | firstpart==62<<10 | firstpart==63<<10){
-			System.out.println("IO operation");
+			
 			return Instr2Opcode(splited[0]) + Instr2Operands4(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format
-			System.out.println("operands="+Instr2Operands1(splited[1]));
-			System.out.println("opcode="+Instr2Opcode(splited[0]));
+			
 			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);
 		}
 		

@@ -6,6 +6,7 @@ public class Keyboard {
 	public static int index = 0;//index in the buffer
 	public static int interrupt=1;//interrupt
 	
+	
 	public static int getActive() {
 		return active;
 	}
@@ -51,19 +52,24 @@ public class Keyboard {
 	public static void append2Buffer(int character, int myindex){
 		contentBuffer[myindex] = character;
 	}
-	//increment the myindex
+	//increment the index
 	public static void increIndex(){
 		index++;
+	}
+	//decrement the index
+	public static void decreIndex(){
+		index--;
 	}
 	//change the buffer into a number
 	public static int buffer2Number(){
 		double sum = 0;
 		int indexcopy = index;
 		for(int i=0;i<index;i++){
-			sum = sum + contentBuffer[i] * Math.pow(10, indexcopy-1);
+			sum = sum + (contentBuffer[i]-48) * Math.pow(10, indexcopy-1);
 			indexcopy = indexcopy - 1;
 		}
 		return (int)sum;
+		
 	}
 	//clear the buffer
 	public static void clearBuffer(){
@@ -75,12 +81,16 @@ public class Keyboard {
 	public static void resetIndex(){
 		index = 0;
 	}
+	public static int hasChar(){
+		for(int i=0;i<index;i++){
+			if(contentBuffer[i]<48 | contentBuffer[i]>57){
+				return 1;
+			}
+		}
+		return 0;
+	};//whether the buffer has char
 	//run the keyboard when pressed the 'Enter'
 	public static void runKeyboard(){
-		System.out.println(buffer2Number());
-		GPRegister.setReg(buffer2Number(), r);
-		System.out.println(r);
-		clearBuffer();
-		resetIndex();
+		GPRegister.setReg(contentBuffer[index], r);
 	}
 }

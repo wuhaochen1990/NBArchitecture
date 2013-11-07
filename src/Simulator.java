@@ -14,6 +14,7 @@ public class Simulator {
 	public static final int JSR = 14;
 	public static final int RFS = 15;
 	public static final int SOB = 16;
+	public static final int JGE = 17;
 	public static final int AMR = 4;
 	public static final int SMR = 5;
 	public static final int AIR = 6;
@@ -102,14 +103,14 @@ public class Simulator {
 	//run the instruction
 	public static void run(){
 		//run until there is not instruction in the memory where pc point to
-		while(Memory.getDataFromMemory(ProgramCounter.getPC()) != 0){
+		while(Memory.getInstrFromMemory(ProgramCounter.getPC()) != 0){
 		if(Keyboard.getInterrupt() == 0){
 			break;
 		}
 		//fetch the instruction from the memory
 		mar = ProgramCounter.getPC();//mar <- pc
 		ProgramCounter.incrementPC();//pc ++
-		mdr = Memory.getDataFromMemory(mar);//mdr <- c(mar)
+		mdr = Memory.getInstrFromMemory(mar);//mdr <- c(mar)
 		ir = mdr;//ir <- mdr
 		
 		//decode the instruction
@@ -117,11 +118,11 @@ public class Simulator {
 		int temp = ir>>>10;// right shift ten bits
 		opcode = temp & 0b111111;// get the six bits opcode
 		
-
 		//choose the instruction function
 		switch(opcode){
 		case LDR:{
 			System.out.println("LDR");
+			
 			Address = operands & 0b111111;//address from the instruction
 			operands = operands>>>6;
 			ac = operands & 0b11;//register number  
@@ -130,28 +131,23 @@ public class Simulator {
 			mar = getEA(x);
 			
 			//cache operation
-			cache_read();
 			
-			GPRegister.setReg(mdr, ac);
+			
+			GPRegister.setReg(Memory.getDataFromMemory(mar), ac);
 			break;
 		}
 		case STR:{
 			System.out.println("STR");
-			System.out.println("operands="+Integer.toBinaryString(operands));
 
 			Address = operands & 0b111111;
 			operands = operands>>>6;
 			ac = operands & 0b11;
 			operands = operands>>>2;
 			x = operands & 0b11;
-			System.out.println("ac="+Integer.toString(ac));
-			System.out.println("address="+Integer.toString(Address));
-			System.out.println("x="+Integer.toString(x));
+			
 
 			mar = getEA(x);
-			System.out.println("mar="+Integer.toString(mar));
 			mdr = GPRegister.getReg(ac);
-			System.out.println("mdr="+Integer.toString(mdr));
 			//cache operation
 			cache_write();
 			break;
@@ -174,6 +170,7 @@ public class Simulator {
 			break;
 		}
 		case LDX:{
+			
 			System.out.println("LDX");
 			Address = operands & 0b111111;
 			operands = operands>>>6;
@@ -181,6 +178,7 @@ public class Simulator {
 			mar = getEA(x);
 			cache_read();
 			X0Reg.setX0(mdr);
+			System.out.println("X0 register:"+Integer.toString(mdr));
 			break;
 		}
 		case STX:{
@@ -269,6 +267,29 @@ public class Simulator {
 			}
 			break;
 		}
+		case JGE:{
+			System.out.println("JGE");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			mar = getEA(x);
+			cache_read();
+			if(GPRegister.getReg(ac) >= 0){
+				if(x == 2 || x == 3){
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(mdr);
+				}else{
+					ProgramCounter.decrementPC();
+					ProgramCounter.setPC(getEA(x));
+				}
+			}else{
+				ProgramCounter.decrementPC();
+				ProgramCounter.incrementPC();
+			}
+			break;
+		}
 		case JMP:{
 			System.out.println("JMP");
 			Address = operands & 0b111111;//address from the instruction
@@ -312,7 +333,6 @@ public class Simulator {
 			System.out.println("RFS");
 			immed = operands;
 			GPRegister.setReg(immed, 0);
-			System.out.println(GPRegister.getReg(3));
 			ProgramCounter.setPC(GPRegister.getReg(3));
 			break;
 		}
@@ -512,12 +532,9 @@ public class Simulator {
 		}
 		case IN:{
 			System.out.println("IN");
-			System.out.println(Integer.toBinaryString(operands));
 			devid = operands & 0b11111;
 			operands = operands >>> 7;
-			System.out.println(operands);
 			r = operands & 0b11;
-			System.out.println(r);
 
 			IO.setDevid(devid);
 			IO.setR(r);
