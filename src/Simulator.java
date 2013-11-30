@@ -30,7 +30,9 @@ public class Simulator {
 	public static final int IN = 61;
 	public static final int OUT = 62;
 	public static final int CHK = 63;
-	
+	public static final int FADD = 33;
+	public static final int FSUB = 34;
+
 	//the value of some key words
 	public static int opcode;//opcode
 	public static int operands;//numbers after the opcode
@@ -562,6 +564,40 @@ public class Simulator {
 			IO.setR(r);
 			IO.setOperation(2);//CHK operation is 2
 			IO.runIO();
+			break;
+		}
+		case FADD:{
+			System.out.println("FADD");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			ALU.setDestination(ac);//set destination register
+			if(x == 2 | x == 3){//set source content
+				ALU.setSource(getEA(x));
+			}else{
+				ALU.setSource(Memory.getDataFromMemory(getEA(x)));
+			}
+			ALU.setOperation(10);//fadd operation number is 10
+			ALU.runALU();
+			break;
+		}
+		case FSUB:{
+			System.out.println("FSUB");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			ALU.setDestination(ac);//set destination register
+			if(x == 2 | x == 3){//set source content
+				ALU.setSource(getEA(x));
+			}else{
+				ALU.setSource(Memory.getDataFromMemory(getEA(x)));
+			}
+			ALU.setOperation(11);//fsub operation number is 10
+			ALU.runALU();
 			break;
 		}
 		}

@@ -2,6 +2,8 @@
 public class GPRegister {
 	//4 general purpose registers
 	public static int Reg[] = new int[4];
+	//2 floating point registers
+	public static int FReg[] = new int[2];
 	
 	//set the register
 	public static void setReg(int data, int index){
@@ -10,6 +12,14 @@ public class GPRegister {
 	//get the register
 	public static int getReg(int index){
 		return Reg[index];
+	}
+	//set the freg
+	public static void setFReg(int exp, int manti, int index){
+		FReg[index] = exp << 24 + manti;
+	}
+	//get the freg
+	public static int getFReg(int index){
+		return FReg[index];
 	}
 //	//show the whole four register
 //	public static void showReg(){

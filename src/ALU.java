@@ -2,8 +2,10 @@
 public class ALU {
 	public static int destination;//destination register index 0-4
 	public static int source;//sources of the operation
-	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7,shift 8,rotate 9
+	public static int operation;//operation means add 0 , sub 1 , mul 2  ,  div 3 ,testequality 4, and 5, or 6, not 7,shift 8,rotate 9,FADD 10,FSUB 11
 	public static int cc[] = new int[16];//condition code. cc[0] is for judge whether the result of the subtract is negative 
+	public static int overflow=0;//fadd overflow
+	public static int underfow=0;//fsub underflow
 	public static int LR;//L <- 0,R <- 1
 	public static int AL;//A <- 0,L <- 1
 	public static int count;
@@ -196,6 +198,69 @@ public class ALU {
 					result = r >> count | r << (16-count);
 				}
 				GPRegister.setReg(result, destination);
+				break;
+			}
+			case(10):{
+				//FADD
+				System.out.println("fadd");
+				int data1 = GPRegister.getFReg(destination);
+				int data1_exp = data1 >> 24;
+				int data1_manti = data1 & 0b111111111111111111111111;
+
+				int data2_1 = Memory.getDataFromMemory(source);
+				int data2_2 = Memory.getDataFromMemory(source+1);
+				int data2_exp = data2_1 >> 8;
+				int data2_manti = (data2_1 & 0b11111111) << 16 + data2_2;
+				
+				int result_manti;
+				//add
+				int result_exp = data1_exp - data2_exp;
+				if(result_exp > 0){
+					result_manti = (data2_manti >> result_exp) + data1_manti;
+					if((result_manti & 0b10000000000000000000000)!=0){
+						overflow = 1;
+					}
+					result_manti = result_manti & 0b111111111111111111111111;
+					result_exp = data1_exp;
+				}else{
+					result_manti = (data1_manti >> (-result_exp)) + data1_manti;
+					if((result_manti & 0b10000000000000000000000)!=0){
+						overflow = 1;
+					}
+					result_manti = result_manti & 0b111111111111111111111111;
+					result_exp = data1_exp;
+				}
+				GPRegister.setFReg(result_exp, result_manti, destination);
+				break;
+			}
+			case(11):{
+				//FSUB
+				System.out.println("fsub");
+				int data1 = GPRegister.getFReg(destination);
+				int data1_exp = data1 >> 24;
+				int data1_manti = data1 & 0b111111111111111111111111;
+
+				int data2_1 = Memory.getDataFromMemory(source);
+				int data2_2 = Memory.getDataFromMemory(source+1);
+				int data2_exp = data2_1 >> 8;
+				int data2_manti = (data2_1 & 0b11111111) << 16 + data2_2;
+				
+				int result_manti;
+				//add
+				int result_exp = data1_exp - data2_exp;
+				if(result_exp > 0){
+					result_manti = (data2_manti >> result_exp) - data1_manti;
+					if(result_manti<0){
+						underfow = 1;
+					}
+					result_manti = result_manti & 0b111111111111111111111111;
+					result_exp = data1_exp;
+				}else{
+					result_manti = (data1_manti >> (-result_exp)) - data1_manti;
+					result_manti = result_manti & 0b111111111111111111111111;
+					result_exp = data1_exp;
+				}
+				GPRegister.setFReg(result_exp, result_manti, destination);
 				break;
 			}
 		}

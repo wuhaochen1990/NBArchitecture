@@ -93,6 +93,10 @@ public class ReadFile {
 			return 62 << 10;
 		}else if(instruction.equals("CHK")){
 			return 63 << 10;
+		}else if(instruction.equals("FADD")){
+			return 33 << 10;
+		}else if(instruction.equals("FSUB")){
+			return 34 << 10;
 		}
 		return 0;
 	}
@@ -176,7 +180,6 @@ public class ReadFile {
 			return Instr2Opcode(splited[0]) + Instr2Operands4(splited[1]);
 		}else{
 			//other instructions have the first kind of instr format
-			
 			return Instr2Opcode(splited[0]) + Instr2Operands1(splited[1]);
 		}
 		

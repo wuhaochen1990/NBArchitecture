@@ -90,6 +90,12 @@ public class Entry extends JFrame {
 	private JButton NO7Button;
 	private JButton NO8Button;
 	private JButton NO9Button;
+	private JButton a_Button;
+	private JButton b_Button;
+	private JPanel keyboardPanel3;
+	private JButton c_Button;
+	private JButton d_Button;
+	private JButton e_Button;
 	
 	
 
@@ -598,6 +604,45 @@ public class Entry extends JFrame {
 			}
 		});
 		keyboardPanel2.add(NO9Button);
+		
+		a_Button = new JButton("a");
+		a_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(97, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Integer.toString(Printer.content));
+					}
+				}
+			}
+		});
+		keyboardPanel2.add(a_Button);
+		
+		b_Button = new JButton("b");
+		keyboardPanel2.add(b_Button);
+		
+		keyboardPanel3 = new JPanel();
+		contentPane.add(keyboardPanel3);
+		
+		c_Button = new JButton("c");
+		keyboardPanel3.add(c_Button);
+		
+		d_Button = new JButton("d");
+		keyboardPanel3.add(d_Button);
+		
+		e_Button = new JButton("e");
+		keyboardPanel3.add(e_Button);
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1); 
