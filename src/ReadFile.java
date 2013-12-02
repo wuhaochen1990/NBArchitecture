@@ -97,6 +97,12 @@ public class ReadFile {
 			return 33 << 10;
 		}else if(instruction.equals("FSUB")){
 			return 34 << 10;
+		}else if(instruction.equals("VADD")){
+			return 35 << 10;
+		}else if(instruction.equals("VSUB")){
+			return 36 << 10;
+		}else if(instruction.equals("CNVRT")){
+			return 37 << 10;
 		}
 		return 0;
 	}

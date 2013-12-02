@@ -14,8 +14,8 @@ public class GPRegister {
 		return Reg[index];
 	}
 	//set the freg
-	public static void setFReg(int exp, int manti, int index){
-		FReg[index] = exp << 24 + manti;
+	public static void setFReg(int s, int exp, int manti, int index){
+		FReg[index] = s << 31 + exp << 24 + manti;
 	}
 	//get the freg
 	public static int getFReg(int index){

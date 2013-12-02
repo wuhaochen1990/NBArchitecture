@@ -32,6 +32,9 @@ public class Simulator {
 	public static final int CHK = 63;
 	public static final int FADD = 33;
 	public static final int FSUB = 34;
+	public static final int VADD = 35;
+	public static final int VSUB = 36;
+	public static final int CNVRT = 37;
 
 	//the value of some key words
 	public static int opcode;//opcode
@@ -367,9 +370,9 @@ public class Simulator {
 			operands = operands>>>2;
 			x = operands & 0b11;//I and IX
 			mar = getEA(x);
-			cache_read();
+//			cache_read();
 			ALU.setDestination(ac);//set destination register
-			ALU.setSource(mdr);//set source content
+			ALU.setSource(Memory.getDataFromMemory(mar));//set source content
 			ALU.setOperation(0);//add operation number is 0
 			ALU.runALU();
 			break;
@@ -597,6 +600,42 @@ public class Simulator {
 				ALU.setSource(Memory.getDataFromMemory(getEA(x)));
 			}
 			ALU.setOperation(11);//fsub operation number is 10
+			ALU.runALU();
+			break;
+		}
+		case VADD:{
+			System.out.println("VADD");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(x == 2 | x == 3){
+				ALU.setV1(Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x))));
+				ALU.setV2(Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x)+1)));
+			}else{
+				ALU.setV1(Memory.getDataFromMemory(getEA(x)));
+				ALU.setV2(Memory.getDataFromMemory(getEA(x)+1));
+			}
+			ALU.setOperation(12);
+			ALU.runALU();
+			break;
+		}
+		case VSUB:{
+			System.out.println("VSUB");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(x == 2 | x == 3){
+				ALU.setV1(Memory.getDataFromMemory(getEA(x)));
+				ALU.setV2(Memory.getDataFromMemory(getEA(x)+1));
+			}else{
+				ALU.setV1(Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x))));
+				ALU.setV2(Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x)+1)));
+			}
+			ALU.setOperation(13);
 			ALU.runALU();
 			break;
 		}

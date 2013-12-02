@@ -18,6 +18,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 
 
 public class Entry extends JFrame {
@@ -96,6 +97,8 @@ public class Entry extends JFrame {
 	private JButton c_Button;
 	private JButton d_Button;
 	private JButton e_Button;
+	private JTextArea textArea;
+	private JTextArea printerTextArea;
 	
 	
 
@@ -653,6 +656,12 @@ public class Entry extends JFrame {
 		printerTextfield = new JTextField();
 		panel_1.add(printerTextfield);
 		printerTextfield.setColumns(30);
+		
+		printerTextArea = new JTextArea();
+		panel_1.add(printerTextArea);
+		
+		textArea = new JTextArea();
+		panel_1.add(textArea);
 		
 		showcachepanel = new JPanel();
 		contentPane.add(showcachepanel);
