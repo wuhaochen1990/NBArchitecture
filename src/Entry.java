@@ -99,6 +99,30 @@ public class Entry extends JFrame {
 	private JButton e_Button;
 	private JTextArea textArea;
 	private JTextArea printerTextArea;
+	private JButton f_Button;
+	private JButton g_Button;
+	private JButton h_Button;
+	private JButton i_Button;
+	private JPanel KeyboardPanel4;
+	private JButton j_Button;
+	private JButton k_Button;
+	private JButton l_Button;
+	private JButton m_Button;
+	private JButton n_Button;
+	private JButton o_Button;
+	private JButton p_Button;
+	private JPanel KeyboardPanel5;
+	private JButton q_Button;
+	private JButton r_Button;
+	private JButton s_Button;
+	private JButton t_Button;
+	private JButton u_Button;
+	private JButton v_Button;
+	private JButton w_Button;
+	private JPanel KeyboardPanel6;
+	private JButton x_Button;
+	private JButton y_Button;
+	private JButton z_Button;
 	
 	
 
@@ -123,7 +147,7 @@ public class Entry extends JFrame {
 	 */
 	public Entry() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 600);
+		setBounds(100, 100, 600, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -154,7 +178,7 @@ public class Entry extends JFrame {
 				
 				//console printer
 				if(Printer.active == 1){
-					printerTextfield.setText(Integer.toString(Printer.content));
+					printerTextfield.setText(Printer.content.toString());
 				}
 						
 			}
@@ -336,7 +360,13 @@ public class Entry extends JFrame {
 				Keyboard.interrupt=1;
 				//rerun the buffer
 				System.out.println("buffer2number:"+Integer.toString(Keyboard.buffer2Number()));
-				Memory.setData2Memory(Keyboard.buffer2Number(), 50);
+				if(Keyboard.hasChar()==1){
+					//input has char
+					
+				}else{
+					//input is a number stored in memory(50)
+					Memory.setData2Memory(Keyboard.buffer2Number(), 50);
+				}
 				Keyboard.clearBuffer();
 				Keyboard.resetIndex();
 				Simulator.run();
@@ -344,7 +374,7 @@ public class Entry extends JFrame {
 				//console printer
 				if(Printer.active == 1){
 					System.out.println("printer active!");
-					printerTextfield.setText(Integer.toString(Printer.content));
+					printerTextfield.setText(Printer.content.toString());
 				}
 				
 			}
@@ -370,7 +400,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 					
 				}
@@ -398,7 +428,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -424,7 +454,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 				
@@ -451,7 +481,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -477,7 +507,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -505,7 +535,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -529,7 +559,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -553,7 +583,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -577,7 +607,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -601,7 +631,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -625,7 +655,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Integer.toString(Printer.content));
+						printerTextfield.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -633,19 +663,616 @@ public class Entry extends JFrame {
 		keyboardPanel2.add(a_Button);
 		
 		b_Button = new JButton("b");
+		b_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(98, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
 		keyboardPanel2.add(b_Button);
 		
 		keyboardPanel3 = new JPanel();
 		contentPane.add(keyboardPanel3);
 		
 		c_Button = new JButton("c");
+		c_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(99, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
 		keyboardPanel3.add(c_Button);
 		
 		d_Button = new JButton("d");
+		d_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(100, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
 		keyboardPanel3.add(d_Button);
 		
 		e_Button = new JButton("e");
+		e_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(101, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
 		keyboardPanel3.add(e_Button);
+		
+		f_Button = new JButton("f");
+		f_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(102, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		keyboardPanel3.add(f_Button);
+		
+		g_Button = new JButton("g");
+		g_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(103, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		keyboardPanel3.add(g_Button);
+		
+		h_Button = new JButton("h");
+		h_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(104, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		keyboardPanel3.add(h_Button);
+		
+		i_Button = new JButton("i");
+		i_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(105, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		keyboardPanel3.add(i_Button);
+		
+		KeyboardPanel4 = new JPanel();
+		contentPane.add(KeyboardPanel4);
+		
+		j_Button = new JButton("j");
+		j_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(106, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(j_Button);
+		
+		k_Button = new JButton("k");
+		k_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(107, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(k_Button);
+		
+		l_Button = new JButton("l");
+		l_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(108, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(l_Button);
+		
+		m_Button = new JButton("m");
+		m_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(109, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(m_Button);
+		
+		n_Button = new JButton("n");
+		n_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(110, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(n_Button);
+		
+		o_Button = new JButton("o");
+		o_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(111, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(o_Button);
+		
+		p_Button = new JButton("p");
+		p_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(112, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel4.add(p_Button);
+		
+		KeyboardPanel5 = new JPanel();
+		contentPane.add(KeyboardPanel5);
+		
+		q_Button = new JButton("q");
+		q_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(113, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(q_Button);
+		
+		r_Button = new JButton("r");
+		r_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(114, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(r_Button);
+		
+		s_Button = new JButton("s");
+		s_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(115, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(s_Button);
+		
+		t_Button = new JButton("t");
+		t_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(116, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(t_Button);
+		
+		u_Button = new JButton("u");
+		u_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(117, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(u_Button);
+		
+		v_Button = new JButton("v");
+		v_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(118, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(v_Button);
+		
+		w_Button = new JButton("w");
+		w_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(119, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel5.add(w_Button);
+		
+		KeyboardPanel6 = new JPanel();
+		contentPane.add(KeyboardPanel6);
+		
+		x_Button = new JButton("x");
+		x_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(120, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel6.add(x_Button);
+		
+		y_Button = new JButton("y");
+		y_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(121, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel6.add(y_Button);
+		
+		z_Button = new JButton("z");
+		z_Button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Keyboard.active == 1){
+					Keyboard.append2Buffer(122, Keyboard.index);
+					//run the keyboard
+					Keyboard.runKeyboard();
+					Keyboard.increIndex();
+					//inactivate the keyboard
+					Keyboard.inactivateKeyboard();
+					//end the interrupt
+					Keyboard.interrupt=1;
+					Simulator.run();
+					
+					//console printer
+					if(Printer.active == 1){
+						System.out.println("printer active!");
+						printerTextfield.setText(Printer.content.toString());
+					}
+				}
+			}
+		});
+		KeyboardPanel6.add(z_Button);
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1); 

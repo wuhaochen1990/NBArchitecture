@@ -1,7 +1,7 @@
 
 public class Printer {
 	public static int active;//status of the printer
-	public static int content;//source register of the printer
+	public static String content;//source register of the printer
 	public static int getActive() {
 		return active;
 	}
@@ -9,10 +9,13 @@ public class Printer {
 		Printer.active = active;
 	}
 	
-	public static int getContent() {
+	
+	
+	
+	public static String getContent() {
 		return content;
 	}
-	public static void setContent(int content) {
+	public static void setContent(String content) {
 		Printer.content = content;
 	}
 	//function to activate the printer

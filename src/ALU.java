@@ -295,7 +295,7 @@ public class ALU {
 				int data2_1 = Memory.getDataFromMemory(source);
 				int data2_2 = Memory.getDataFromMemory(source+1);
 				int data2_s = (data2_1 >> 15) &0b1;
-				int data2_exp = data2_1 >> 8;
+				int data2_exp = (data2_1 >> 8) & 0b1111111;
 				int data2_manti = (data2_1 & 0b11111111) << 16 + data2_2;
 				if(data2_s == 1){
 					data2_manti = 0-data2_manti;
@@ -339,6 +339,7 @@ public class ALU {
 				int temp;
 				for(int i = 0; i < length; i++){
 					temp = Memory.getDataFromMemory(v1+i)+Memory.getDataFromMemory(v2+i);
+					System.out.println("index:"+Integer.toString(i)+" "+"vector1:"+Integer.toString(Memory.getDataFromMemory(v1+i))+" "+"vector2:"+Integer.toString(Memory.getDataFromMemory(v2+i))+" "+"Result:"+Integer.toString(temp));
 					Memory.setData2Memory(temp, v1+i);
 				}
 				break;
