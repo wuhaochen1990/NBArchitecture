@@ -51,112 +51,157 @@ public class IO {
 				//content to print
 				int asc = GPRegister.getReg(r);
 				System.out.println(asc);
-				if(asc<=57 & asc>=48){
-					Printer.setContent(Integer.toString(asc-48));
-				}
+//				if(asc<=57 & asc>=48){
+//					Printer.setContent(Integer.to);
+//				}
 				switch(asc){
+				
+				case(10):{
+					Printer.setContent('\n');
+					break;
+				}
+				case(48):{
+					Printer.setContent('0');
+					break;
+				}
+				case(49):{
+					Printer.setContent('1');
+					break;
+				}
+				case(50):{
+					Printer.setContent('2');
+					break;
+				}
+				case(51):{
+					Printer.setContent('3');
+					break;
+				}
+				case(52):{
+					Printer.setContent('4');
+					break;
+				}
+				case(53):{
+					Printer.setContent('5');
+					break;
+				}
+				case(54):{
+					Printer.setContent('6');
+					break;
+				}
+				case(55):{
+					Printer.setContent('7');
+					break;
+				}
+				case(56):{
+					Printer.setContent('8');
+					break;
+				}
+				case(57):{
+					Printer.setContent('9');
+					break;
+				}
 				case(97):{
-					Printer.setContent("a");
+					Printer.setContent('a');
 					break;
 				}
 				case(98):{
-					Printer.setContent("b");
+					Printer.setContent('b');
 					break;
 				}
 				case(99):{
-					Printer.setContent("c");
+					Printer.setContent('c');
 					break;
 				}
 				case(100):{
-					Printer.setContent("d");
+					Printer.setContent('d');
 					break;
 				}
 				case(101):{
-					Printer.setContent("e");
+					Printer.setContent('e');
 					break;
 				}
 				case(102):{
-					Printer.setContent("f");
+					Printer.setContent('f');
 					break;
 				}
 				case(103):{
-					Printer.setContent("g");
+					Printer.setContent('g');
 					break;
 				}
 				case(104):{
-					Printer.setContent("h");
+					Printer.setContent('h');
 					break;
 				}
 				case(105):{
-					Printer.setContent("i");
+					Printer.setContent('i');
 					break;
 				}
 				case(106):{
-					Printer.setContent("j");
+					Printer.setContent('j');
 					break;
 				}
 				case(107):{
-					Printer.setContent("k");
+					Printer.setContent('k');
 					break;
 				}
 				case(108):{
-					Printer.setContent("l");
+					Printer.setContent('l');
 					break;
 				}
 				case(109):{
-					Printer.setContent("m");
+					Printer.setContent('m');
 					break;
 				}
 				case(110):{
-					Printer.setContent("n");
+					Printer.setContent('n');
 					break;
 				}
 				case(111):{
-					Printer.setContent("o");
+					Printer.setContent('o');
 					break;
 				}
 				case(112):{
-					Printer.setContent("p");
+					Printer.setContent('p');
 					break;
 				}
 				case(113):{
-					Printer.setContent("q");
+					Printer.setContent('q');
 					break;
 				}
 				case(114):{
-					Printer.setContent("r");
+					Printer.setContent('r');
 					break;
 				}
 				case(115):{
-					Printer.setContent("s");
+					Printer.setContent('s');
 					break;
 				}
 				case(116):{
-					Printer.setContent("t");
+					Printer.setContent('t');
 					break;
 				}
 				case(117):{
-					Printer.setContent("u");
+					Printer.setContent('u');
 					break;
 				}
 				case(118):{
-					Printer.setContent("v");
+					Printer.setContent('v');
 					break;
 				}
 				case(119):{
-					Printer.setContent("w");
+					Printer.setContent('w');
 					break;
 				}
 				case(120):{
-					Printer.setContent("x");
+					Printer.setContent('x');
 					break;
 				}
 				case(121):{
-					Printer.setContent("y");
+					Printer.setContent('y');
 					break;
 				}
 				case(122):{
-					Printer.setContent("z");
+					Printer.setContent('z');
 					break;
 				}
 				}

@@ -228,8 +228,11 @@ public class ALU {
 				System.out.println("fadd");
 				int data1 = GPRegister.getFReg(destination);
 				int data1_s = (data1 >> 31) & 0b1;
+				System.out.println("data1_s:"+Integer.toBinaryString(data1_s));
 				int data1_exp = (data1 >> 24) & 0b1111111;
+				System.out.println("data1_exp:"+Integer.toBinaryString(data1_exp));
 				int data1_manti = data1 & 0b111111111111111111111111;
+				System.out.println("data1_manti:"+Integer.toBinaryString(data1_manti));
 				if(data1_s == 1){
 					data1_manti = 0-data1_manti;
 				}
@@ -237,8 +240,11 @@ public class ALU {
 				int data2_1 = Memory.getDataFromMemory(source);
 				int data2_2 = Memory.getDataFromMemory(source+1);
 				int data2_s = (data2_1 >> 15) &0b1;
+				System.out.println("data2_s:"+Integer.toBinaryString(data2_s));
 				int data2_exp = (data2_1 >> 8) & 0b1111111;
+				System.out.println("data2_exp:"+Integer.toBinaryString(data2_exp));
 				int data2_manti = (data2_1 & 0b11111111) << 16 + data2_2;
+				System.out.println("data2_manti:"+Integer.toBinaryString(data2_manti));
 				if(data2_s == 1){
 					data2_manti = 0-data2_manti;
 				}
@@ -247,8 +253,10 @@ public class ALU {
 				int result_s=0;
 				//add
 				int result_exp = data1_exp - data2_exp;
+				System.out.println("result_exp:"+Integer.toBinaryString(result_exp));
 				if(result_exp > 0){
 					result_manti = (data2_manti >> result_exp) + data1_manti;
+					System.out.println("result_manti:"+Integer.toBinaryString(result_manti));
 					if((result_manti & 0b10000000000000000000000)!=0){
 						overflow = 1;
 					}
@@ -259,7 +267,10 @@ public class ALU {
 						result_s = 0;
 					}
 					result_manti = result_manti & 0b111111111111111111111111;
+					System.out.println("result_manti:"+Integer.toBinaryString(result_manti));
 					result_exp = data1_exp;
+					System.out.println("result_exp:"+Integer.toBinaryString(result_exp));
+					System.out.println("result_s:"+Integer.toBinaryString(result_s));
 					
 					
 				}else{

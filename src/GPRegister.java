@@ -5,6 +5,7 @@ public class GPRegister {
 	//2 floating point registers
 	public static int FReg[] = new int[2];
 	
+	
 	//set the register
 	public static void setReg(int data, int index){
 		Reg[index] = data;
@@ -15,12 +16,17 @@ public class GPRegister {
 	}
 	//set the freg
 	public static void setFReg(int s, int exp, int manti, int index){
-		FReg[index] = s << 31 + exp << 24 + manti;
+		FReg[index] = (s << 31) + (exp << 24) + manti;
+		System.out.println(Integer.toBinaryString(FReg[index]));
 	}
 	//get the freg
 	public static int getFReg(int index){
 		return FReg[index];
 	}
+//	public static void intsetFReg(int i,int index){
+//		System.out.println("intset ok");
+//		FReg[index]=i;
+//	}
 //	//show the whole four register
 //	public static void showReg(){
 //		System.out.println("Register0:"+Integer.toString(Reg[0]));

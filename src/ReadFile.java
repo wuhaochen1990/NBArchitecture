@@ -5,7 +5,7 @@ import java.io.FileReader;
 //read instruction from a file
 public class ReadFile {
 	// Input file path
-	public static String filePath = System.getProperty("user.dir") + "/Instruction.txt";
+	public static String filePath = System.getProperty("user.dir") + "/Instruction for program 2.txt";
 	//string from the certain file
 	public static String instruction = "";
 	
@@ -103,6 +103,10 @@ public class ReadFile {
 			return 36 << 10;
 		}else if(instruction.equals("CNVRT")){
 			return 37 << 10;
+		}else if(instruction.equals("LDFR")){
+			return 8 << 10;
+		}else if(instruction.equals("STFR")){
+			return 9 << 10;
 		}
 		return 0;
 	}

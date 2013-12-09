@@ -8,7 +8,7 @@ public class Memory {
 	public static final int[] memory = new int[MAX_ADDRESS+1];
 	//empty index of the memory
 	public static int emptyIndex = 1;
-	
+	public static StringBuffer content = new StringBuffer("");
 	
 	
 	
@@ -68,5 +68,21 @@ public class Memory {
 	//get data from memory
 	public static int getDataFromMemory(int address){
 		return memory[address];
+	}
+	
+	
+	public static String setContent(){
+		for(int i = 0;i < 10000; i++){
+			if(Memory.getDataFromMemory(i)!=0){
+				System.out.println("setContent ok!");
+				content.append("Memory");
+				content.append(Integer.toString(i));
+				content.append(":");
+				content.append(Integer.toString(Memory.getDataFromMemory(i)));
+				content.append('\n');
+			}
+		}
+		return Memory.content.toString();
+		
 	}
 }

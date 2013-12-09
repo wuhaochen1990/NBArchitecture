@@ -35,7 +35,8 @@ public class Simulator {
 	public static final int VADD = 35;
 	public static final int VSUB = 36;
 	public static final int CNVRT = 37;
-
+	public static final int LDFR = 8;
+	public static final int STFR = 9;
 	//the value of some key words
 	public static int opcode;//opcode
 	public static int operands;//numbers after the opcode
@@ -569,6 +570,58 @@ public class Simulator {
 			IO.runIO();
 			break;
 		}
+		case LDFR:{
+			System.out.println("LDFR");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(x == 2 | x == 3){
+				int data1 = Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x)));
+				int data2 = Memory.getDataFromMemory(Memory.getDataFromMemory(getEA(x)+1));
+				int s = (data1 >> 15) & 0b1;
+				int exp = (data1 >> 8) & 0b1111111;
+				int manti = ((data1 & 0b11111111) << 16) + data2;
+				System.out.println(s);
+				System.out.println(Integer.toBinaryString(exp));
+				System.out.println(Integer.toBinaryString(manti));
+				GPRegister.setFReg(s, exp, manti, ac);
+			}else{
+				int data1 = Memory.getDataFromMemory(getEA(x));
+				int data2 = Memory.getDataFromMemory(getEA(x)+1);
+				int s = (data1 >> 15) & 0b1;
+				int exp = (data1 >> 8) & 0b1111111;
+				int manti = ((data1 & 0b11111111) << 16) + data2;
+				System.out.println(s);
+				System.out.println(Integer.toBinaryString(exp));
+				System.out.println(Integer.toBinaryString(manti));
+				GPRegister.setFReg(s, exp, manti, ac);
+			}
+			break;
+		}
+		case STFR:{
+			System.out.println("STFR");
+			Address = operands & 0b111111;//address from the instruction
+			operands = operands>>>6;
+			ac = operands & 0b11;//register number  
+			operands = operands>>>2;
+			x = operands & 0b11;//I and IX
+			if(x == 2 | x == 3){
+				int data = GPRegister.getFReg(ac);
+				int data1 = data & 0b1111111111111111;
+				int data2 = (data >> 16) & 0b1111111111111111;
+				Memory.setData2Memory(data1, Memory.getDataFromMemory(getEA(x)));
+				Memory.setData2Memory(data2,  Memory.getDataFromMemory(getEA(x)+1));
+			}else{
+				int data = GPRegister.getFReg(ac);
+				int data1 = data & 0b1111111111111111;
+				int data2 = (data >> 16) & 0b1111111111111111;
+				Memory.setData2Memory(data2, getEA(x));
+				Memory.setData2Memory(data1, getEA(x)+1);
+			}
+			break;
+		}
 		case FADD:{
 			System.out.println("FADD");
 			Address = operands & 0b111111;//address from the instruction
@@ -578,9 +631,9 @@ public class Simulator {
 			x = operands & 0b11;//I and IX
 			ALU.setDestination(ac);//set destination register
 			if(x == 2 | x == 3){//set source content
-				ALU.setSource(getEA(x));
-			}else{
 				ALU.setSource(Memory.getDataFromMemory(getEA(x)));
+			}else{
+				ALU.setSource(getEA(x));
 			}
 			ALU.setOperation(10);//fadd operation number is 10
 			ALU.runALU();
@@ -595,9 +648,9 @@ public class Simulator {
 			x = operands & 0b11;//I and IX
 			ALU.setDestination(ac);//set destination register
 			if(x == 2 | x == 3){//set source content
-				ALU.setSource(getEA(x));
-			}else{
 				ALU.setSource(Memory.getDataFromMemory(getEA(x)));
+			}else{
+				ALU.setSource(getEA(x));
 			}
 			ALU.setOperation(11);//fsub operation number is 10
 			ALU.runALU();

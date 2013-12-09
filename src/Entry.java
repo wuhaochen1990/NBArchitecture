@@ -68,12 +68,9 @@ public class Entry extends JFrame {
 	private JTextField setRegIndexTextField;
 	private JLabel setregcontentlabel;
 	private JTextField setRegContentTextField;
-	private JPanel panel;
+	private JPanel keyboardPanel1;
 	private JLabel keyboardLabel;
 	private JButton keyboardButton;
-	private JPanel panel_1;
-	private JLabel printerLabel;
-	private JTextField printerTextfield;
 	private JPanel showcachepanel;
 	private JLabel cacheaddresslabel;
 	private JTextField cacheIndexTextField;
@@ -97,8 +94,6 @@ public class Entry extends JFrame {
 	private JButton c_Button;
 	private JButton d_Button;
 	private JButton e_Button;
-	private JTextArea textArea;
-	private JTextArea printerTextArea;
 	private JButton f_Button;
 	private JButton g_Button;
 	private JButton h_Button;
@@ -123,6 +118,11 @@ public class Entry extends JFrame {
 	private JButton x_Button;
 	private JButton y_Button;
 	private JButton z_Button;
+	private JScrollPane scrollPane;
+	private JTextArea printer;
+	private JScrollPane scrollPane_1;
+	private JTextArea memoryTextArea;
+	private JButton showallmemoryButton;
 	
 	
 
@@ -174,11 +174,14 @@ public class Entry extends JFrame {
 				
 				ReadFile.readfile(filepath.getText().toString());
 				System.out.println("ok,run!");
+				
 				Simulator.run();
 				
 				//console printer
 				if(Printer.active == 1){
-					printerTextfield.setText(Printer.content.toString());
+					
+					printer.setText(Printer.content.toString());
+					
 				}
 						
 			}
@@ -302,8 +305,11 @@ public class Entry extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("show ok");
 				int memoryaddress = Integer.parseInt(showmemoryaddressTextField.getText().toString());
-				showmemorycontentTextField.setText(Integer.toString(Memory.getDataFromMemory(memoryaddress)));
+				showmemorycontentTextField.setText(Integer.toBinaryString(Memory.getDataFromMemory(memoryaddress)));
+				System.out.println("show ok");
+//				memoryTextArea.setText(Memory.setContent());
 				
 			}
 			
@@ -314,7 +320,7 @@ public class Entry extends JFrame {
 		
 		showmemorycontentTextField = new JTextField();
 		panel_showmemoy.add(showmemorycontentTextField);
-		showmemorycontentTextField.setColumns(10);
+		showmemorycontentTextField.setColumns(11);
 		
 		panel_showpcx0 = new JPanel();
 		contentPane.add(panel_showpcx0);
@@ -343,11 +349,11 @@ public class Entry extends JFrame {
 		panel_showpcx0.add(showPCTextField);
 		showPCTextField.setColumns(10);
 		
-		panel = new JPanel();
-		contentPane.add(panel);
+		keyboardPanel1 = new JPanel();
+		contentPane.add(keyboardPanel1);
 		
 		keyboardLabel = new JLabel("keyboard");
-		panel.add(keyboardLabel);
+		keyboardPanel1.add(keyboardLabel);
 		
 		keyboardButton = new JButton("Enter");
 		keyboardButton.addActionListener(new ActionListener() {
@@ -374,7 +380,7 @@ public class Entry extends JFrame {
 				//console printer
 				if(Printer.active == 1){
 					System.out.println("printer active!");
-					printerTextfield.setText(Printer.content.toString());
+					printer.setText(Printer.content.toString());
 				}
 				
 			}
@@ -400,13 +406,13 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 					
 				}
 			}
 		});
-		panel.add(NO0Button);
+		keyboardPanel1.add(NO0Button);
 		
 		NO1Button = new JButton("1");
 		NO1Button.addActionListener(new ActionListener() {
@@ -428,12 +434,12 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
 		});
-		panel.add(NO1Button);
+		keyboardPanel1.add(NO1Button);
 		
 		NO2Button = new JButton("2");
 		NO2Button.addActionListener(new ActionListener() {
@@ -454,13 +460,13 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 				
 			}
 		});
-		panel.add(NO2Button);
+		keyboardPanel1.add(NO2Button);
 		
 		NO3Button = new JButton("3");
 		NO3Button.addActionListener(new ActionListener() {
@@ -481,12 +487,12 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
 		});
-		panel.add(NO3Button);
+		keyboardPanel1.add(NO3Button);
 		
 		NO4Button = new JButton("4");
 		NO4Button.addActionListener(new ActionListener() {
@@ -507,13 +513,13 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
 		});
-		panel.add(NO4Button);
-		panel.add(keyboardButton);
+		keyboardPanel1.add(NO4Button);
+		keyboardPanel1.add(keyboardButton);
 		
 		keyboardPanel2 = new JPanel();
 		contentPane.add(keyboardPanel2);
@@ -535,7 +541,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -559,7 +565,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -583,7 +589,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -607,7 +613,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -631,7 +637,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -655,7 +661,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -679,7 +685,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -706,7 +712,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -730,7 +736,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -754,7 +760,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -778,7 +784,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -802,7 +808,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -826,7 +832,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -850,7 +856,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -877,7 +883,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -901,7 +907,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -925,7 +931,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -949,7 +955,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -973,7 +979,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -997,7 +1003,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1021,7 +1027,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1048,7 +1054,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1072,7 +1078,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1096,7 +1102,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1120,7 +1126,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1144,7 +1150,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1168,7 +1174,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1192,7 +1198,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1219,7 +1225,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1243,7 +1249,7 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
@@ -1267,28 +1273,37 @@ public class Entry extends JFrame {
 					//console printer
 					if(Printer.active == 1){
 						System.out.println("printer active!");
-						printerTextfield.setText(Printer.content.toString());
+						printer.setText(Printer.content.toString());
 					}
 				}
 			}
 		});
 		KeyboardPanel6.add(z_Button);
 		
-		panel_1 = new JPanel();
-		contentPane.add(panel_1); 
+		showallmemoryButton = new JButton("show data memory");
+		showallmemoryButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				memoryTextArea.setText(Memory.setContent());
+			}
+		});
+		KeyboardPanel6.add(showallmemoryButton);
 		
-		printerLabel = new JLabel("console printer");
-		panel_1.add(printerLabel);
+		scrollPane = new JScrollPane();
+		contentPane.add(scrollPane);
 		
-		printerTextfield = new JTextField();
-		panel_1.add(printerTextfield);
-		printerTextfield.setColumns(30);
+		printer = new JTextArea();
+		printer.setEditable(false);
+		printer.setRows(5);
+		printer.setColumns(30);
+		scrollPane.setViewportView(printer);
 		
-		printerTextArea = new JTextArea();
-		panel_1.add(printerTextArea);
+		scrollPane_1 = new JScrollPane();
+		contentPane.add(scrollPane_1);
 		
-		textArea = new JTextArea();
-		panel_1.add(textArea);
+		memoryTextArea = new JTextArea();
+		memoryTextArea.setRows(5);
+		memoryTextArea.setColumns(13);
+		scrollPane_1.setViewportView(memoryTextArea);
 		
 		showcachepanel = new JPanel();
 		contentPane.add(showcachepanel);
